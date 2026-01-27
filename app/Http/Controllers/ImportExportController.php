@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-use App\Models\Anggota;
-use App\Models\Simpanan;
-use App\Models\Pinjaman;
 use App\Models\Pelanggan;
 use App\Models\Pemasok;
 use App\Models\MasterPersediaan;
@@ -19,21 +16,6 @@ class ImportExportController extends Controller
      * Available modules for import/export
      */
     protected $modules = [
-        'anggota' => [
-            'label' => 'Anggota Koperasi',
-            'table' => 'anggota',
-            'columns' => ['no_anggota', 'nik', 'nama_lengkap', 'alamat', 'telepon', 'email', 'tanggal_daftar', 'status']
-        ],
-        'simpanan' => [
-            'label' => 'Simpanan',
-            'table' => 'simpanan',
-            'columns' => ['no_transaksi', 'tanggal', 'id_anggota', 'id_jenis_simpanan', 'jenis_transaksi', 'jumlah', 'keterangan']
-        ],
-        'pinjaman' => [
-            'label' => 'Pinjaman',
-            'table' => 'pinjaman',
-            'columns' => ['no_pinjaman', 'id_anggota', 'id_jenis_pinjaman', 'tanggal_pengajuan', 'jumlah_pinjaman', 'bunga_pertahun', 'metode_bunga', 'tenor', 'provisi', 'biaya_admin', 'status']
-        ],
         'pelanggan' => [
             'label' => 'Pelanggan',
             'table' => 'pelanggan',
@@ -62,7 +44,7 @@ class ImportExportController extends Controller
     public function index()
     {
         $modules = $this->modules;
-        
+
         // Get count for each module
         $counts = [];
         foreach ($modules as $key => $module) {
@@ -85,21 +67,21 @@ class ImportExportController extends Controller
         $data = DB::table($config['table'])->get();
 
         $filename = $module . '_' . date('Y-m-d_His') . '.csv';
-        
+
         $headers = [
             'Content-Type' => 'text/csv; charset=UTF-8',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ];
 
-        $callback = function() use ($data, $config) {
+        $callback = function () use ($data, $config) {
             $file = fopen('php://output', 'w');
-            
+
             // Add BOM for Excel UTF-8 compatibility
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
-            
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
             // Write header
             fputcsv($file, $config['columns']);
-            
+
             // Write data
             foreach ($data as $row) {
                 $rowData = [];
@@ -108,7 +90,7 @@ class ImportExportController extends Controller
                 }
                 fputcsv($file, $rowData);
             }
-            
+
             fclose($file);
         };
 
@@ -126,28 +108,28 @@ class ImportExportController extends Controller
 
         $config = $this->modules[$module];
         $filename = $module . '_template.csv';
-        
+
         $headers = [
             'Content-Type' => 'text/csv; charset=UTF-8',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ];
 
-        $callback = function() use ($config) {
+        $callback = function () use ($config) {
             $file = fopen('php://output', 'w');
-            
+
             // Add BOM for Excel UTF-8 compatibility
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
-            
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
             // Write header only
             fputcsv($file, $config['columns']);
-            
+
             // Add sample row for reference
             $sample = [];
             foreach ($config['columns'] as $col) {
                 $sample[] = 'contoh_' . $col;
             }
             fputcsv($file, $sample);
-            
+
             fclose($file);
         };
 
@@ -170,19 +152,19 @@ class ImportExportController extends Controller
 
         $config = $this->modules[$module];
         $file = $request->file('file');
-        
+
         try {
             $handle = fopen($file->getPathname(), 'r');
-            
+
             // Skip BOM if present
             $bom = fread($handle, 3);
-            if ($bom !== chr(0xEF).chr(0xBB).chr(0xBF)) {
+            if ($bom !== chr(0xEF) . chr(0xBB) . chr(0xBF)) {
                 rewind($handle);
             }
-            
+
             // Read header
             $header = fgetcsv($handle);
-            
+
             // Validate header
             $expectedColumns = $config['columns'];
             if (array_diff($expectedColumns, $header) || array_diff($header, $expectedColumns)) {
@@ -203,7 +185,7 @@ class ImportExportController extends Controller
 
             while (($row = fgetcsv($handle)) !== false) {
                 $lineNumber++;
-                
+
                 // Skip empty rows
                 if (empty(array_filter($row))) {
                     continue;
@@ -213,12 +195,12 @@ class ImportExportController extends Controller
                     $data = [];
                     foreach ($header as $i => $col) {
                         $value = trim($row[$i] ?? '');
-                        
+
                         // Handle empty values
                         if ($value === '' || $value === 'contoh_' . $col) {
                             $value = null;
                         }
-                        
+
                         // Convert date formats (DD-MM-YYYY or DD/MM/YYYY) to MySQL format (YYYY-MM-DD)
                         if ($value !== null && preg_match('/tanggal|date/i', $col)) {
                             if (preg_match('/^(\d{2})[-\/](\d{2})[-\/](\d{4})$/', $value, $matches)) {
@@ -228,7 +210,7 @@ class ImportExportController extends Controller
                                 // Already in YYYY-MM-DD format, keep as is
                             }
                         }
-                        
+
                         $data[$col] = $value;
                     }
 
@@ -280,21 +262,6 @@ class ImportExportController extends Controller
 
         // Module-specific handling
         switch ($module) {
-            case 'anggota':
-                // Check for duplicate NIK or no_anggota
-                if (!empty($data['nik'])) {
-                    $exists = DB::table($table)->where('nik', $data['nik'])->exists();
-                    if ($exists) {
-                        throw new \Exception("NIK {$data['nik']} sudah ada");
-                    }
-                }
-                if (!empty($data['no_anggota'])) {
-                    $exists = DB::table($table)->where('no_anggota', $data['no_anggota'])->exists();
-                    if ($exists) {
-                        throw new \Exception("No Anggota {$data['no_anggota']} sudah ada");
-                    }
-                }
-                break;
 
             case 'pelanggan':
                 if (!empty($data['kode_pelanggan'])) {
@@ -344,25 +311,25 @@ class ImportExportController extends Controller
     public function exportAll()
     {
         $filename = 'all_data_' . date('Y-m-d_His') . '.csv';
-        
+
         $headers = [
             'Content-Type' => 'text/csv; charset=UTF-8',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ];
 
-        $callback = function() {
+        $callback = function () {
             $file = fopen('php://output', 'w');
-            
+
             // Add BOM
-            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
-            
+            fprintf($file, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
             foreach ($this->modules as $key => $config) {
                 // Write module header
                 fputcsv($file, ['=== ' . strtoupper($config['label']) . ' ===']);
                 fputcsv($file, $config['columns']);
-                
+
                 $data = DB::table($config['table'])->get();
-                
+
                 foreach ($data as $row) {
                     $rowData = [];
                     foreach ($config['columns'] as $col) {
@@ -370,11 +337,11 @@ class ImportExportController extends Controller
                     }
                     fputcsv($file, $rowData);
                 }
-                
+
                 // Empty line between modules
                 fputcsv($file, []);
             }
-            
+
             fclose($file);
         };
 

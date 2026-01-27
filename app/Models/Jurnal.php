@@ -13,8 +13,17 @@ class Jurnal extends Model
     protected $primaryKey = 'id_jurnal';
     protected $guarded = ['id_jurnal'];
 
+    protected $casts = [
+        'tanggal' => 'date',
+    ];
+
     public function details()
     {
         return $this->hasMany(JurnalDetail::class, 'id_jurnal');
+    }
+
+    public function proyek()
+    {
+        return $this->belongsTo(Proyek::class, 'id_proyek', 'id_proyek');
     }
 }

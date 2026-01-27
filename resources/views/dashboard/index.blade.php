@@ -23,7 +23,7 @@
             <div class="summary-card primary">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
-                        <p class="summary-card-label mb-2">Total Saldo Kas & Bank</p>
+                        <p class="summary-card-label mb-2">Posisi Keuangan (Piutang - Utang)</p>
                         <h2 class="mb-0" style="font-size: 2rem;">Rp {{ number_format($totalPiutang - $totalUtang, 0, ',', '.') }}</h2>
                     </div>
                     <div style="font-size: 48px; opacity: 0.3;">💰</div>
@@ -78,63 +78,35 @@
         </div>
     </div>
 
-    <!-- Simpan Pinjam Summary -->
+    <!-- Statistics Cards -->
     <div class="row g-4 mb-4">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>🏦 Total Simpanan</span>
-                    <span class="badge" style="background: var(--color-primary); color: white;">{{ $simpananByType->count() }} Jenis</span>
-                </div>
-                <div class="card-body">
-                    <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">Rp {{ number_format($totalSimpanan, 0, ',', '.') }}</h3>
-                    
-                    @if($simpananByType->count() > 0)
-                    <div class="mt-3">
-                        @foreach($simpananByType as $simpanan)
-                        <div class="d-flex justify-content-between align-items-center py-2" style="border-bottom: 1px solid var(--color-border-light);">
-                            <div>
-                                <span class="fw-bold">{{ $simpanan->nama_simpanan }}</span>
-                                <small class="text-muted d-block">{{ ucfirst($simpanan->tipe) }}</small>
-                            </div>
-                            <span class="fw-bold {{ $simpanan->saldo >= 0 ? 'text-success' : 'text-danger' }}">
-                                Rp {{ number_format($simpanan->saldo, 0, ',', '.') }}
-                            </span>
-                        </div>
-                        @endforeach
-                    </div>
-                    @else
-                    <p class="text-muted mb-0">Belum ada data simpanan</p>
-                    @endif
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">👥</div>
+                    <h3 class="mb-1" style="color: var(--color-primary);">{{ number_format($countPelanggan) }}</h3>
+                    <p class="text-muted mb-0">Pelanggan</p>
+                    <a href="{{ route('pelanggan.index') }}" class="btn btn-sm btn-outline-primary mt-2">Lihat Semua</a>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span>💰 Pinjaman Aktif</span>
-                    <span class="badge" style="background: var(--color-warning); color: white;">{{ $pinjamanByType->sum('jumlah_aktif') }} Pinjaman</span>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🏢</div>
+                    <h3 class="mb-1" style="color: var(--color-warning);">{{ number_format($countPemasok) }}</h3>
+                    <p class="text-muted mb-0">Pemasok</p>
+                    <a href="{{ route('pemasok.index') }}" class="btn btn-sm btn-outline-warning mt-2">Lihat Semua</a>
                 </div>
-                <div class="card-body">
-                    <h3 style="color: var(--color-warning); margin-bottom: var(--space-md);">Rp {{ number_format($totalPinjamanAktif, 0, ',', '.') }}</h3>
-                    
-                    @if($pinjamanByType->count() > 0)
-                    <div class="mt-3">
-                        @foreach($pinjamanByType as $pinjaman)
-                        <div class="d-flex justify-content-between align-items-center py-2" style="border-bottom: 1px solid var(--color-border-light);">
-                            <div>
-                                <span class="fw-bold">{{ $pinjaman->nama_pinjaman }}</span>
-                                <small class="text-muted d-block">{{ $pinjaman->jumlah_aktif }} aktif</small>
-                            </div>
-                            <span class="fw-bold" style="color: var(--color-warning);">
-                                Rp {{ number_format($pinjaman->sisa_pokok, 0, ',', '.') }}
-                            </span>
-                        </div>
-                        @endforeach
-                    </div>
-                    @else
-                    <p class="text-muted mb-0">Belum ada pinjaman aktif</p>
-                    @endif
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📦</div>
+                    <h3 class="mb-1" style="color: var(--color-info);">{{ number_format($countPersediaan) }}</h3>
+                    <p class="text-muted mb-0">Item Persediaan</p>
+                    <a href="{{ route('persediaan.index') }}" class="btn btn-sm btn-outline-info mt-2">Lihat Semua</a>
                 </div>
             </div>
         </div>
@@ -159,6 +131,92 @@
                 </div>
                 <div class="card-body">
                     <canvas id="pendapatanBiayaChart" style="max-height: 300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>🛒 Penjualan Terakhir</span>
+                    <a href="{{ route('penjualan.index') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                </div>
+                <div class="card-body p-0">
+                    @if($recentPenjualan->count() > 0)
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>No. Faktur</th>
+                                    <th>Pelanggan</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($recentPenjualan as $penjualan)
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('penjualan.show', $penjualan->id_penjualan) }}" class="text-decoration-none">
+                                            {{ $penjualan->no_faktur }}
+                                        </a>
+                                        <br><small class="text-muted">{{ \Carbon\Carbon::parse($penjualan->tanggal_faktur)->format('d M Y') }}</small>
+                                    </td>
+                                    <td>{{ $penjualan->pelanggan->nama_pelanggan ?? '-' }}</td>
+                                    <td class="text-end text-success fw-bold">Rp {{ number_format($penjualan->total, 0, ',', '.') }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @else
+                    <div class="text-center py-4 text-muted">
+                        <p class="mb-0">Belum ada data penjualan</p>
+                    </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>🛍️ Pembelian Terakhir</span>
+                    <a href="{{ route('pembelian.index') }}" class="btn btn-sm btn-outline-danger">Lihat Semua</a>
+                </div>
+                <div class="card-body p-0">
+                    @if($recentPembelian->count() > 0)
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead>
+                                <tr>
+                                    <th>No. Faktur</th>
+                                    <th>Pemasok</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($recentPembelian as $pembelian)
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('pembelian.show', $pembelian->id_pembelian) }}" class="text-decoration-none">
+                                            {{ $pembelian->no_faktur }}
+                                        </a>
+                                        <br><small class="text-muted">{{ \Carbon\Carbon::parse($pembelian->tanggal_faktur)->format('d M Y') }}</small>
+                                    </td>
+                                    <td>{{ $pembelian->pemasok->nama_pemasok ?? '-' }}</td>
+                                    <td class="text-end text-danger fw-bold">Rp {{ number_format($pembelian->total, 0, ',', '.') }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    @else
+                    <div class="text-center py-4 text-muted">
+                        <p class="mb-0">Belum ada data pembelian</p>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -206,26 +264,6 @@
                     </div>
                     <span class="quick-add-arrow">→</span>
                 </a>
-
-                @if(config('app.tipe_usaha') == 'Simpan Pinjam')
-                <a href="{{ route('simpanan.create') }}" class="quick-add-item">
-                    <div class="quick-add-icon income">💰</div>
-                    <div class="quick-add-info">
-                        <div class="quick-add-title">Simpanan</div>
-                        <div class="quick-add-desc">Transaksi simpanan anggota</div>
-                    </div>
-                    <span class="quick-add-arrow">→</span>
-                </a>
-                
-                <a href="{{ route('pinjaman.create') }}" class="quick-add-item">
-                    <div class="quick-add-icon expense">💳</div>
-                    <div class="quick-add-info">
-                        <div class="quick-add-title">Pinjaman</div>
-                        <div class="quick-add-desc">Pengajuan pinjaman baru</div>
-                    </div>
-                    <span class="quick-add-arrow">→</span>
-                </a>
-                @endif
             </div>
         </div>
     </div>

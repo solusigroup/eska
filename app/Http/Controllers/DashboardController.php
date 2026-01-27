@@ -7,10 +7,6 @@ use App\Models\Pemasok;
 use App\Models\Persediaan;
 use App\Models\Penjualan;
 use App\Models\Pembelian;
-use App\Models\Simpanan;
-use App\Models\Pinjaman;
-use App\Models\JenisSimpanan;
-use App\Models\JenisPinjaman;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,56 +14,19 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // 1. Summary Cards - Existing
+        // 1. Summary Cards
         $totalPiutang = Pelanggan::sum('saldo_terkini_piutang') ?? 0;
         $totalUtang = Pemasok::sum('saldo_terkini_hutang') ?? 0;
         
         // Calculate inventory value: sum(stok_saat_ini * harga_beli)
         $nilaiPersediaan = Persediaan::select(DB::raw('SUM(stok_saat_ini * harga_beli) as total'))->value('total') ?? 0;
 
-        // 2. Simpanan Summary by Type
-        $simpananByType = collect([]);
-        $totalSimpanan = 0;
-        
-        try {
-            $simpananByType = DB::table('simpanan')
-                ->join('jenis_simpanan', 'simpanan.id_jenis_simpanan', '=', 'jenis_simpanan.id_jenis_simpanan')
-                ->select(
-                    'jenis_simpanan.nama_simpanan',
-                    'jenis_simpanan.tipe',
-                    DB::raw("SUM(CASE WHEN simpanan.jenis_transaksi = 'setor' THEN simpanan.jumlah ELSE -simpanan.jumlah END) as saldo")
-                )
-                ->groupBy('jenis_simpanan.id_jenis_simpanan', 'jenis_simpanan.nama_simpanan', 'jenis_simpanan.tipe')
-                ->get();
+        // 2. Count statistics
+        $countPelanggan = Pelanggan::count();
+        $countPemasok = Pemasok::count();
+        $countPersediaan = Persediaan::count();
 
-            $totalSimpanan = $simpananByType->sum('saldo');
-        } catch (\Exception $e) {
-            // Tables don't exist yet
-        }
-
-        // 3. Pinjaman Summary by Type (Active loans only)
-        $pinjamanByType = collect([]);
-        $totalPinjamanAktif = 0;
-        
-        try {
-            $pinjamanByType = DB::table('pinjaman')
-                ->join('jenis_pinjaman', 'pinjaman.id_jenis_pinjaman', '=', 'jenis_pinjaman.id_jenis_pinjaman')
-                ->select(
-                    'jenis_pinjaman.nama_pinjaman',
-                    'jenis_pinjaman.kategori',
-                    DB::raw('SUM(pinjaman.sisa_pokok) as sisa_pokok'),
-                    DB::raw('COUNT(pinjaman.id_pinjaman) as jumlah_aktif')
-                )
-                ->whereIn('pinjaman.status', ['active', 'disbursed'])
-                ->groupBy('jenis_pinjaman.id_jenis_pinjaman', 'jenis_pinjaman.nama_pinjaman', 'jenis_pinjaman.kategori')
-                ->get();
-
-            $totalPinjamanAktif = $pinjamanByType->sum('sisa_pokok');
-        } catch (\Exception $e) {
-            // Tables don't exist yet
-        }
-
-        // 4. Trend Chart Data - Penjualan vs Pembelian (Last 6 Months)
+        // 3. Trend Chart Data - Penjualan vs Pembelian (Last 6 Months)
         $sixMonthsAgo = now()->subMonths(6)->startOfMonth();
 
         $penjualan = Penjualan::select(
@@ -107,7 +66,7 @@ class DashboardController extends Controller
             $currentDate->addMonth();
         }
 
-        // 5. Pendapatan vs Biaya Chart (From jurnal_detail with akun klasifikasi)
+        // 4. Pendapatan vs Biaya Chart (From jurnal_detail with akun klasifikasi)
         $pendapatanData = [];
         $biayaData = [];
         
@@ -146,20 +105,31 @@ class DashboardController extends Controller
             }
         }
 
+        // 5. Recent transactions
+        $recentPenjualan = Penjualan::with('pelanggan')
+            ->orderBy('tanggal_faktur', 'desc')
+            ->limit(5)
+            ->get();
+
+        $recentPembelian = Pembelian::with('pemasok')
+            ->orderBy('tanggal_faktur', 'desc')
+            ->limit(5)
+            ->get();
+
         return view('dashboard.index', [
             'totalPiutang' => $totalPiutang,
             'totalUtang' => $totalUtang,
             'nilaiPersediaan' => $nilaiPersediaan,
-            'simpananByType' => $simpananByType,
-            'totalSimpanan' => $totalSimpanan,
-            'pinjamanByType' => $pinjamanByType,
-            'totalPinjamanAktif' => $totalPinjamanAktif,
+            'countPelanggan' => $countPelanggan,
+            'countPemasok' => $countPemasok,
+            'countPersediaan' => $countPersediaan,
             'chartLabels' => json_encode($labels),
             'chartSales' => json_encode($salesData),
             'chartPurchases' => json_encode($purchasesData),
             'chartPendapatan' => json_encode($pendapatanData),
             'chartBiaya' => json_encode($biayaData),
+            'recentPenjualan' => $recentPenjualan,
+            'recentPembelian' => $recentPembelian,
         ]);
     }
 }
-

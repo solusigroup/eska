@@ -13,6 +13,12 @@ class Penjualan extends Model
     protected $primaryKey = 'id_penjualan';
     protected $guarded = ['id_penjualan'];
 
+    protected $casts = [
+        'tanggal_faktur' => 'date',
+        'total' => 'decimal:2',
+        'sisa_tagihan' => 'decimal:2',
+    ];
+
     public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class, 'id_pelanggan');
@@ -26,5 +32,10 @@ class Penjualan extends Model
     public function jurnal()
     {
         return $this->belongsTo(Jurnal::class, 'id_jurnal');
+    }
+
+    public function proyek()
+    {
+        return $this->belongsTo(Proyek::class, 'id_proyek', 'id_proyek');
     }
 }

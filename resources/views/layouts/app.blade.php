@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" class="dark-mode">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Simple Akunting')</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Custom CSS -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-    
+
     <style>
         /* ========================================
            App Layout Styles
@@ -76,11 +77,11 @@
         }
 
         .btn-sidebar-toggle:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .btn-logout {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             color: var(--color-white);
             padding: var(--space-sm) var(--space-md);
@@ -94,7 +95,7 @@
         }
 
         .btn-logout:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Sidebar */
@@ -343,12 +344,14 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="app-header">
         <div class="d-flex align-items-center gap-3">
             <button class="btn-sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -366,7 +369,8 @@
             <form method="POST" action="{{ route('logout') }}" class="d-inline">
                 @csrf
                 <button type="submit" class="btn-logout">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                         <polyline points="16 17 21 12 16 7"></polyline>
                         <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -382,7 +386,8 @@
         <div class="sidebar-content">
             <ul class="sidebar-nav">
                 <li class="sidebar-nav-item">
-                    <a class="sidebar-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                    <a class="sidebar-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+                        href="{{ route('dashboard') }}">
                         <span data-feather="home"></span>
                         Dashboard
                     </a>
@@ -391,43 +396,48 @@
 
             <!-- Master Data -->
             @if(auth()->user()->canViewMasterData())
-            @php
-                $isMasterActive = request()->routeIs('pelanggan.*') || request()->routeIs('pemasok.*') || request()->routeIs('persediaan.*') || request()->routeIs('akun.*');
-            @endphp
-            <div class="sidebar-section">
-                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#masterDataMenu" aria-expanded="{{ $isMasterActive ? 'true' : 'false' }}">
-                    <span>Master Data</span>
-                    <span data-feather="chevron-down" class="chevron"></span>
+                @php
+                    $isMasterActive = request()->routeIs('pelanggan.*') || request()->routeIs('pemasok.*') || request()->routeIs('persediaan.*') || request()->routeIs('akun.*');
+                @endphp
+                <div class="sidebar-section">
+                    <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#masterDataMenu"
+                        aria-expanded="{{ $isMasterActive ? 'true' : 'false' }}">
+                        <span>Master Data</span>
+                        <span data-feather="chevron-down" class="chevron"></span>
+                    </div>
+                    <div class="collapse {{ $isMasterActive ? 'show' : '' }}" id="masterDataMenu">
+                        <ul class="sidebar-nav sidebar-submenu">
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('pelanggan.*') ? 'active' : '' }}"
+                                    href="{{ route('pelanggan.index') }}">
+                                    <span data-feather="users"></span>
+                                    Pelanggan
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('pemasok.*') ? 'active' : '' }}"
+                                    href="{{ route('pemasok.index') }}">
+                                    <span data-feather="truck"></span>
+                                    Pemasok
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('persediaan.*') ? 'active' : '' }}"
+                                    href="{{ route('persediaan.index') }}">
+                                    <span data-feather="box"></span>
+                                    Persediaan
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('akun.*') ? 'active' : '' }}"
+                                    href="{{ route('akun.index') }}">
+                                    <span data-feather="list"></span>
+                                    Akun (COA)
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="collapse {{ $isMasterActive ? 'show' : '' }}" id="masterDataMenu">
-                    <ul class="sidebar-nav sidebar-submenu">
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('pelanggan.*') ? 'active' : '' }}" href="{{ route('pelanggan.index') }}">
-                                <span data-feather="users"></span>
-                                Pelanggan
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('pemasok.*') ? 'active' : '' }}" href="{{ route('pemasok.index') }}">
-                                <span data-feather="truck"></span>
-                                Pemasok
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('persediaan.*') ? 'active' : '' }}" href="{{ route('persediaan.index') }}">
-                                <span data-feather="box"></span>
-                                Persediaan
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('akun.*') ? 'active' : '' }}" href="{{ route('akun.index') }}">
-                                <span data-feather="list"></span>
-                                Akun (COA)
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             @endif
 
             <!-- Transaksi -->
@@ -435,26 +445,30 @@
                 $isTransaksiActive = request()->routeIs('penjualan.*') || request()->routeIs('pembelian.*') || request()->routeIs('jurnal.*');
             @endphp
             <div class="sidebar-section">
-                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#transaksiMenu" aria-expanded="{{ $isTransaksiActive ? 'true' : 'false' }}">
+                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#transaksiMenu"
+                    aria-expanded="{{ $isTransaksiActive ? 'true' : 'false' }}">
                     <span>Transaksi</span>
                     <span data-feather="chevron-down" class="chevron"></span>
                 </div>
                 <div class="collapse {{ $isTransaksiActive ? 'show' : '' }}" id="transaksiMenu">
                     <ul class="sidebar-nav sidebar-submenu">
                         <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('penjualan.*') ? 'active' : '' }}" href="{{ route('penjualan.index') }}">
+                            <a class="sidebar-nav-link {{ request()->routeIs('penjualan.*') ? 'active' : '' }}"
+                                href="{{ route('penjualan.index') }}">
                                 <span data-feather="shopping-cart"></span>
                                 Penjualan
                             </a>
                         </li>
                         <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('pembelian.*') ? 'active' : '' }}" href="{{ route('pembelian.index') }}">
+                            <a class="sidebar-nav-link {{ request()->routeIs('pembelian.*') ? 'active' : '' }}"
+                                href="{{ route('pembelian.index') }}">
                                 <span data-feather="shopping-bag"></span>
                                 Pembelian
                             </a>
                         </li>
                         <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('jurnal.*') ? 'active' : '' }}" href="{{ route('jurnal.index') }}">
+                            <a class="sidebar-nav-link {{ request()->routeIs('jurnal.*') ? 'active' : '' }}"
+                                href="{{ route('jurnal.index') }}">
                                 <span data-feather="file-text"></span>
                                 Jurnal Umum
                             </a>
@@ -465,29 +479,40 @@
 
             <!-- Kas & Bank -->
             @php
-                $isKasActive = request()->routeIs('penerimaan.*') || request()->routeIs('pembayaran.*') || request()->routeIs('kas.*');
+                $isKasActive = request()->routeIs('penerimaan.*') || request()->routeIs('pembayaran.*') || request()->routeIs('kas.*') || request()->routeIs('jurnal-kas.*');
             @endphp
             <div class="sidebar-section">
-                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#kasMenu" aria-expanded="{{ $isKasActive ? 'true' : 'false' }}">
+                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#kasMenu"
+                    aria-expanded="{{ $isKasActive ? 'true' : 'false' }}">
                     <span>Kas & Bank</span>
                     <span data-feather="chevron-down" class="chevron"></span>
                 </div>
                 <div class="collapse {{ $isKasActive ? 'show' : '' }}" id="kasMenu">
                     <ul class="sidebar-nav sidebar-submenu">
                         <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('penerimaan.*') ? 'active' : '' }}" href="{{ route('penerimaan.index') }}">
+                            <a class="sidebar-nav-link {{ request()->routeIs('penerimaan.*') ? 'active' : '' }}"
+                                href="{{ route('penerimaan.index') }}">
                                 <span data-feather="arrow-down-circle"></span>
                                 Penerimaan
                             </a>
                         </li>
                         <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('pembayaran.*') ? 'active' : '' }}" href="{{ route('pembayaran.index') }}">
+                            <a class="sidebar-nav-link {{ request()->routeIs('pembayaran.*') ? 'active' : '' }}"
+                                href="{{ route('pembayaran.index') }}">
                                 <span data-feather="arrow-up-circle"></span>
                                 Pembayaran
                             </a>
                         </li>
                         <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('kas.*') ? 'active' : '' }}" href="{{ route('kas.index') }}">
+                            <a class="sidebar-nav-link {{ request()->routeIs('jurnal-kas.*') ? 'active' : '' }}"
+                                href="{{ route('jurnal-kas.index') }}">
+                                <span data-feather="book-open"></span>
+                                Jurnal Kas
+                            </a>
+                        </li>
+                        <li class="sidebar-nav-item">
+                            <a class="sidebar-nav-link {{ request()->routeIs('kas.*') ? 'active' : '' }}"
+                                href="{{ route('kas.index') }}">
                                 <span data-feather="dollar-sign"></span>
                                 Transaksi Kas
                             </a>
@@ -496,161 +521,164 @@
                 </div>
             </div>
 
+            <!-- Proyek Management -->
+            @php
+                $isProyekActive = request()->routeIs('proyek.*');
+            @endphp
+            <div class="sidebar-section">
+                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#proyekMenu"
+                    aria-expanded="{{ $isProyekActive ? 'true' : 'false' }}">
+                    <span>📁 Proyek</span>
+                    <span data-feather="chevron-down" class="chevron"></span>
+                </div>
+                <div class="collapse {{ $isProyekActive ? 'show' : '' }}" id="proyekMenu">
+                    <ul class="sidebar-nav sidebar-submenu">
+                        <li class="sidebar-nav-item">
+                            <a class="sidebar-nav-link {{ request()->routeIs('proyek.index') || request()->routeIs('proyek.show') ? 'active' : '' }}"
+                                href="{{ route('proyek.index') }}">
+                                <span data-feather="folder"></span>
+                                Daftar Proyek
+                            </a>
+                        </li>
+                        <li class="sidebar-nav-item">
+                            <a class="sidebar-nav-link {{ request()->routeIs('proyek.create') ? 'active' : '' }}"
+                                href="{{ route('proyek.create') }}">
+                                <span data-feather="plus-circle"></span>
+                                Tambah Proyek
+                            </a>
+                        </li>
+                        <li class="sidebar-nav-item">
+                            <a class="sidebar-nav-link {{ request()->routeIs('proyek.assign') ? 'active' : '' }}"
+                                href="{{ route('proyek.assign') }}">
+                                <span data-feather="link"></span>
+                                Assign Transaksi
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
             <!-- Laporan -->
             @if(auth()->user()->canViewReports())
-            @php
-                $isLaporanActive = request()->routeIs('bukubesar.*') || request()->routeIs('laporan.*');
-            @endphp
-            <div class="sidebar-section">
-                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#laporanMenu" aria-expanded="{{ $isLaporanActive ? 'true' : 'false' }}">
-                    <span>Laporan</span>
-                    <span data-feather="chevron-down" class="chevron"></span>
+                @php
+                    $isLaporanActive = request()->routeIs('bukubesar.*') || request()->routeIs('laporan.*');
+                @endphp
+                <div class="sidebar-section">
+                    <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#laporanMenu"
+                        aria-expanded="{{ $isLaporanActive ? 'true' : 'false' }}">
+                        <span>Laporan</span>
+                        <span data-feather="chevron-down" class="chevron"></span>
+                    </div>
+                    <div class="collapse {{ $isLaporanActive ? 'show' : '' }}" id="laporanMenu">
+                        <ul class="sidebar-nav sidebar-submenu">
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('bukubesar.*') ? 'active' : '' }}"
+                                    href="{{ route('bukubesar.index') }}">
+                                    <span data-feather="book"></span>
+                                    Buku Besar
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('laporan.neraca') ? 'active' : '' }}"
+                                    href="{{ route('laporan.neraca') }}">
+                                    <span data-feather="bar-chart-2"></span>
+                                    Neraca
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('laporan.labarugi') ? 'active' : '' }}"
+                                    href="{{ route('laporan.labarugi') }}">
+                                    <span data-feather="trending-up"></span>
+                                    Laba Rugi
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('laporan.aruskas_langsung') ? 'active' : '' }}"
+                                    href="{{ route('laporan.aruskas_langsung') }}">
+                                    <span data-feather="activity"></span>
+                                    Arus Kas (Langsung)
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('laporan.aruskas_tidak_langsung') ? 'active' : '' }}"
+                                    href="{{ route('laporan.aruskas_tidak_langsung') }}">
+                                    <span data-feather="activity"></span>
+                                    Arus Kas (Tidak Langsung)
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('laporan.perubahan_ekuitas') ? 'active' : '' }}"
+                                    href="{{ route('laporan.perubahan_ekuitas') }}">
+                                    <span data-feather="pie-chart"></span>
+                                    Perubahan Ekuitas
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="collapse {{ $isLaporanActive ? 'show' : '' }}" id="laporanMenu">
-                    <ul class="sidebar-nav sidebar-submenu">
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('bukubesar.*') ? 'active' : '' }}" href="{{ route('bukubesar.index') }}">
-                                <span data-feather="book"></span>
-                                Buku Besar
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('laporan.neraca') ? 'active' : '' }}" href="{{ route('laporan.neraca') }}">
-                                <span data-feather="bar-chart-2"></span>
-                                Neraca
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('laporan.labarugi') ? 'active' : '' }}" href="{{ route('laporan.labarugi') }}">
-                                <span data-feather="trending-up"></span>
-                                Laba Rugi
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('laporan.aruskas_langsung') ? 'active' : '' }}" href="{{ route('laporan.aruskas_langsung') }}">
-                                <span data-feather="activity"></span>
-                                Arus Kas (Langsung)
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('laporan.aruskas_tidak_langsung') ? 'active' : '' }}" href="{{ route('laporan.aruskas_tidak_langsung') }}">
-                                <span data-feather="activity"></span>
-                                Arus Kas (Tidak Langsung)
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('laporan.perubahan_ekuitas') ? 'active' : '' }}" href="{{ route('laporan.perubahan_ekuitas') }}">
-                                <span data-feather="pie-chart"></span>
-                                Perubahan Ekuitas
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             @endif
-
-            <!-- Simpan Pinjam -->
-            @php
-                $isKoperasiActive = request()->routeIs('anggota.*') || request()->routeIs('simpanan.*') || request()->routeIs('pinjaman.*') || request()->routeIs('approval.*');
-            @endphp
-            <div class="sidebar-section">
-                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#koperasiMenu" aria-expanded="{{ $isKoperasiActive ? 'true' : 'false' }}">
-                    <span>🏦 Simpan Pinjam</span>
-                    <span data-feather="chevron-down" class="chevron"></span>
-                </div>
-                <div class="collapse {{ $isKoperasiActive ? 'show' : '' }}" id="koperasiMenu">
-                    <ul class="sidebar-nav sidebar-submenu">
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('anggota.*') ? 'active' : '' }}" href="{{ route('anggota.index') }}">
-                                <span data-feather="users"></span>
-                                Anggota
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('simpanan.*') ? 'active' : '' }}" href="{{ route('simpanan.index') }}">
-                                <span data-feather="save"></span>
-                                Simpanan
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('pinjaman.*') ? 'active' : '' }}" href="{{ route('pinjaman.index') }}">
-                                <span data-feather="credit-card"></span>
-                                Pinjaman
-                            </a>
-                        </li>
-                        @if(auth()->user()->canApprove())
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('approval.*') ? 'active' : '' }}" href="{{ route('approval.inbox') }}">
-                                <span data-feather="check-square"></span>
-                                Approval
-                            </a>
-                        </li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
 
             <!-- Import/Export -->
             @if(auth()->user()->canImportExport())
-            <ul class="sidebar-nav mt-3">
-                <li class="sidebar-nav-item">
-                    <a class="sidebar-nav-link {{ request()->routeIs('import-export.*') ? 'active' : '' }}" href="{{ route('import-export.index') }}">
-                        <span data-feather="upload-cloud"></span>
-                        Import/Export
-                    </a>
-                </li>
-            </ul>
+                <ul class="sidebar-nav mt-3">
+                    <li class="sidebar-nav-item">
+                        <a class="sidebar-nav-link {{ request()->routeIs('import-export.*') ? 'active' : '' }}"
+                            href="{{ route('import-export.index') }}">
+                            <span data-feather="upload-cloud"></span>
+                            Import/Export
+                        </a>
+                    </li>
+                    <li class="sidebar-nav-item">
+                        <a class="sidebar-nav-link {{ request()->routeIs('import-kas.*') ? 'active' : '' }}"
+                            href="{{ route('import-kas.index') }}">
+                            <span data-feather="download"></span>
+                            Import Kas
+                        </a>
+                    </li>
+                </ul>
             @endif
 
             <!-- Admin -->
             @if(auth()->user()->canManageUsers())
-            @php
-                $isAdminActive = request()->routeIs('perusahaan.*') || request()->routeIs('users.*') || request()->routeIs('database.*') || request()->routeIs('jenis-pinjaman.*') || request()->routeIs('jenis-simpanan.*');
-            @endphp
-            <div class="sidebar-section">
-                <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#adminMenu" aria-expanded="{{ $isAdminActive ? 'true' : 'false' }}">
-                    <span>⚙️ Admin</span>
-                    <span data-feather="chevron-down" class="chevron"></span>
+                @php
+                    $isAdminActive = request()->routeIs('perusahaan.*') || request()->routeIs('users.*') || request()->routeIs('database.*');
+                @endphp
+                <div class="sidebar-section">
+                    <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#adminMenu"
+                        aria-expanded="{{ $isAdminActive ? 'true' : 'false' }}">
+                        <span>⚙️ Admin</span>
+                        <span data-feather="chevron-down" class="chevron"></span>
+                    </div>
+                    <div class="collapse {{ $isAdminActive ? 'show' : '' }}" id="adminMenu">
+                        <ul class="sidebar-nav sidebar-submenu">
+                            @if(auth()->user()->canManageCompany())
+                                <li class="sidebar-nav-item">
+                                    <a class="sidebar-nav-link {{ request()->routeIs('perusahaan.*') ? 'active' : '' }}"
+                                        href="{{ route('perusahaan.edit') }}">
+                                        <span data-feather="settings"></span>
+                                        Profil Perusahaan
+                                    </a>
+                                </li>
+                            @endif
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}"
+                                    href="{{ route('users.index') }}">
+                                    <span data-feather="users"></span>
+                                    Manajemen User
+                                </a>
+                            </li>
+                            @if(auth()->user()->canAccessDatabase())
+                                <li class="sidebar-nav-item">
+                                    <a class="sidebar-nav-link {{ request()->routeIs('database.*') ? 'active' : '' }}"
+                                        href="{{ route('database.index') }}">
+                                        <span data-feather="database"></span>
+                                        Manajemen Database
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
                 </div>
-                <div class="collapse {{ $isAdminActive ? 'show' : '' }}" id="adminMenu">
-                    <ul class="sidebar-nav sidebar-submenu">
-                        @if(auth()->user()->canManageCompany())
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('perusahaan.*') ? 'active' : '' }}" href="{{ route('perusahaan.edit') }}">
-                                <span data-feather="settings"></span>
-                                Profil Perusahaan
-                            </a>
-                        </li>
-                        @endif
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}" href="{{ route('users.index') }}">
-                                <span data-feather="users"></span>
-                                Manajemen User
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('jenis-pinjaman.*') ? 'active' : '' }}" href="{{ route('jenis-pinjaman.index') }}">
-                                <span data-feather="layers"></span>
-                                Jenis Pinjaman
-                            </a>
-                        </li>
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('jenis-simpanan.*') ? 'active' : '' }}" href="{{ route('jenis-simpanan.index') }}">
-                                <span data-feather="layers"></span>
-                                Jenis Simpanan
-                            </a>
-                        </li>
-                        @if(auth()->user()->canAccessDatabase())
-                        <li class="sidebar-nav-item">
-                            <a class="sidebar-nav-link {{ request()->routeIs('database.*') ? 'active' : '' }}" href="{{ route('database.index') }}">
-                                <span data-feather="database"></span>
-                                Manajemen Database
-                            </a>
-                        </li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
             @endif
         </div>
     </aside>
@@ -684,25 +712,29 @@
     <nav class="bottom-nav">
         <ul class="bottom-nav-list">
             <li class="bottom-nav-item">
-                <a href="{{ route('dashboard') }}" class="bottom-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <a href="{{ route('dashboard') }}"
+                    class="bottom-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <span data-feather="home"></span>
                     Beranda
                 </a>
             </li>
             <li class="bottom-nav-item">
-                <a href="{{ route('jurnal.index') }}" class="bottom-nav-link {{ request()->routeIs('jurnal.*') || request()->routeIs('penjualan.*') || request()->routeIs('pembelian.*') ? 'active' : '' }}">
+                <a href="{{ route('jurnal.index') }}"
+                    class="bottom-nav-link {{ request()->routeIs('jurnal.*') || request()->routeIs('penjualan.*') || request()->routeIs('pembelian.*') ? 'active' : '' }}">
                     <span data-feather="list"></span>
                     Transaksi
                 </a>
             </li>
             <li class="bottom-nav-item">
-                <a href="{{ route('laporan.neraca') }}" class="bottom-nav-link {{ request()->routeIs('laporan.*') || request()->routeIs('bukubesar.*') ? 'active' : '' }}">
+                <a href="{{ route('laporan.neraca') }}"
+                    class="bottom-nav-link {{ request()->routeIs('laporan.*') || request()->routeIs('bukubesar.*') ? 'active' : '' }}">
                     <span data-feather="bar-chart-2"></span>
                     Laporan
                 </a>
             </li>
             <li class="bottom-nav-item">
-                <a href="{{ route('users.index') }}" class="bottom-nav-link {{ request()->routeIs('users.*') || request()->routeIs('perusahaan.*') ? 'active' : '' }}">
+                <a href="{{ route('users.index') }}"
+                    class="bottom-nav-link {{ request()->routeIs('users.*') || request()->routeIs('perusahaan.*') ? 'active' : '' }}">
                     <span data-feather="user"></span>
                     Akun
                 </a>
@@ -711,7 +743,9 @@
     </nav>
 
     <!-- Sidebar Overlay (Mobile) -->
-    <div class="sidebar-overlay" id="sidebarOverlay" style="display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 800;"></div>
+    <div class="sidebar-overlay" id="sidebarOverlay"
+        style="display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 800;">
+    </div>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -719,7 +753,7 @@
     <script>
         (function () {
             'use strict'
-            
+
             // Initialize Feather Icons
             feather.replace({ 'aria-hidden': 'true' });
 
@@ -757,22 +791,22 @@
             });
 
             // Slide Panel Functions (Global)
-            window.openSlidePanel = function(panelId) {
+            window.openSlidePanel = function (panelId) {
                 document.getElementById(panelId).classList.add('show');
                 document.getElementById(panelId + 'Overlay').classList.add('show');
                 document.body.style.overflow = 'hidden';
             };
 
-            window.closeSlidePanel = function(panelId) {
+            window.closeSlidePanel = function (panelId) {
                 document.getElementById(panelId).classList.remove('show');
                 document.getElementById(panelId + 'Overlay').classList.remove('show');
                 document.body.style.overflow = '';
             };
 
             // Close slide panel on Escape key
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
-                    document.querySelectorAll('.slide-panel.show').forEach(function(panel) {
+                    document.querySelectorAll('.slide-panel.show').forEach(function (panel) {
                         closeSlidePanel(panel.id);
                     });
                 }
@@ -781,4 +815,5 @@
     </script>
     @stack('scripts')
 </body>
+
 </html>

@@ -13,6 +13,12 @@ class Pembelian extends Model
     protected $primaryKey = 'id_pembelian';
     protected $guarded = ['id_pembelian'];
 
+    protected $casts = [
+        'tanggal_faktur' => 'date',
+        'total' => 'decimal:2',
+        'sisa_tagihan' => 'decimal:2',
+    ];
+
     public function pemasok()
     {
         return $this->belongsTo(Pemasok::class, 'id_pemasok');
@@ -26,6 +32,11 @@ class Pembelian extends Model
     public function jurnal()
     {
         return $this->belongsTo(Jurnal::class, 'id_jurnal');
+    }
+
+    public function proyek()
+    {
+        return $this->belongsTo(Proyek::class, 'id_proyek', 'id_proyek');
     }
 
     public function getNoFakturAttribute()

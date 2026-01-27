@@ -13,6 +13,11 @@ class JurnalDetail extends Model
     protected $primaryKey = 'id_detail';
     protected $guarded = ['id_detail'];
 
+    protected $casts = [
+        'debit' => 'decimal:2',
+        'kredit' => 'decimal:2',
+    ];
+
     public function jurnal()
     {
         return $this->belongsTo(Jurnal::class, 'id_jurnal');
@@ -21,5 +26,10 @@ class JurnalDetail extends Model
     public function akun()
     {
         return $this->belongsTo(Akun::class, 'kode_akun');
+    }
+
+    public function proyek()
+    {
+        return $this->belongsTo(Proyek::class, 'id_proyek', 'id_proyek');
     }
 }
