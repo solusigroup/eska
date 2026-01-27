@@ -117,8 +117,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/laporan/neraca/pdf', [LaporanController::class, 'neracaPdf'])->name('laporan.neraca.pdf');
         Route::get('/laporan/labarugi', [LaporanController::class, 'labaRugi'])->name('laporan.labarugi');
         Route::get('/laporan/labarugi/pdf', [LaporanController::class, 'labaRugiPdf'])->name('laporan.labarugi.pdf');
+        Route::get('/laporan/labarugi-proyek', [LaporanController::class, 'labaRugiProyek'])->name('laporan.labarugi_proyek');
+        Route::get('/laporan/labarugi-konsolidasi', [LaporanController::class, 'labaRugiKonsolidasi'])->name('laporan.labarugi_konsolidasi');
         Route::get('/laporan/aruskas-langsung', [LaporanController::class, 'arusKasLangsung'])->name('laporan.aruskas_langsung');
         Route::get('/laporan/aruskas-tidak-langsung', [LaporanController::class, 'arusKasTidakLangsung'])->name('laporan.aruskas_tidak_langsung');
+        Route::get('/laporan/aruskas-proyek', [LaporanController::class, 'arusKasProyek'])->name('laporan.aruskas_proyek');
+        Route::get('/laporan/aruskas-konsolidasi', [LaporanController::class, 'arusKasKonsolidasi'])->name('laporan.aruskas_konsolidasi');
         Route::get('/laporan/perubahan-ekuitas', [LaporanController::class, 'perubahanEkuitas'])->name('laporan.perubahan_ekuitas');
         Route::get('/laporan/persediaan', [LaporanController::class, 'persediaan'])->name('laporan.persediaan');
     });

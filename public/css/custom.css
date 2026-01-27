@@ -1440,3 +1440,284 @@ body.dark-mode {
 .dark-mode .transaction-title {
     color: var(--color-text);
 }
+
+/* Dark Mode Card Components - Improved Contrast */
+.dark-mode .card-title {
+    color: var(--color-text);
+}
+
+.dark-mode .card-subtitle,
+.dark-mode .card-subtitle.text-muted {
+    color: var(--color-text-muted) !important;
+}
+
+.dark-mode .card-text.text-primary,
+.dark-mode .text-primary {
+    color: #5eead4 !important;
+    /* Lighter teal for better contrast */
+}
+
+.dark-mode .card-link {
+    color: #5eead4;
+    /* Lighter teal for better visibility */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+
+.dark-mode .card-link:hover {
+    color: #99f6e4;
+    /* Even lighter on hover */
+    text-decoration: underline;
+}
+
+/* Fix h2 inside cards for Kas page */
+.dark-mode .card h2 {
+    color: #5eead4;
+}
+
+/* ========================================
+   IMPROVED DASHBOARD CONTRAST (Dark Mode)
+======================================== */
+
+/* Summary Cards - Higher Contrast */
+.dark-mode .summary-card-label {
+    color: #cbd5e1 !important;
+    /* Lighter label color */
+}
+
+.dark-mode .summary-card-value {
+    color: #f8fafc !important;
+    /* Near white for values */
+}
+
+/* Success/Danger/Info colors - Higher contrast */
+.dark-mode .summary-card-value[style*="color: var(--color-success)"],
+.dark-mode h3[style*="color: var(--color-success)"] {
+    color: #4ade80 !important;
+    /* Brighter green */
+}
+
+.dark-mode .summary-card-value[style*="color: var(--color-danger)"],
+.dark-mode h3[style*="color: var(--color-danger)"] {
+    color: #f87171 !important;
+    /* Brighter red */
+}
+
+.dark-mode .summary-card-value[style*="color: var(--color-info)"],
+.dark-mode h3[style*="color: var(--color-info)"] {
+    color: #60a5fa !important;
+    /* Brighter blue */
+}
+
+.dark-mode .summary-card-value[style*="color: var(--color-warning)"],
+.dark-mode h3[style*="color: var(--color-warning)"] {
+    color: #fbbf24 !important;
+    /* Brighter yellow */
+}
+
+.dark-mode .summary-card-value[style*="color: var(--color-primary)"],
+.dark-mode h3[style*="color: var(--color-primary)"] {
+    color: #67e8f9 !important;
+    /* Cyan for primary */
+}
+
+/* Text muted - higher contrast in dark mode */
+.dark-mode .text-muted,
+.dark-mode p.text-muted {
+    color: #94a3b8 !important;
+    /* Brighter muted text */
+}
+
+/* Card Headers in Dark Mode */
+.dark-mode .card-header {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+}
+
+/* Table improvements */
+.dark-mode .table th {
+    background: rgba(255, 255, 255, 0.03);
+    color: #94a3b8;
+    /* Softer slate color instead of bright */
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark-mode .table td {
+    color: #cbd5e1;
+    /* Slightly softer than before */
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark-mode .table tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Fix striped tables and hover in dark mode */
+.dark-mode .table-striped>tbody>tr:nth-of-type(odd)>td,
+.dark-mode .table-striped>tbody>tr:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.015) !important;
+}
+
+.dark-mode .table-striped>tbody>tr:nth-of-type(even)>td,
+.dark-mode .table-striped>tbody>tr:nth-of-type(even) {
+    background: transparent !important;
+}
+
+.dark-mode .table-hover>tbody>tr:hover>td,
+.dark-mode .table-hover>tbody>tr:hover {
+    background: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Data table specific fixes */
+.dark-mode .data-table tbody tr {
+    background: transparent;
+}
+
+.dark-mode .data-table tbody tr:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.dark-mode .data-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Link colors in dark mode - softer blue */
+.dark-mode .text-decoration-none,
+.dark-mode table a {
+    color: #38bdf8 !important;
+    /* Softer sky blue instead of bright cyan */
+}
+
+.dark-mode table a:hover {
+    color: #7dd3fc !important;
+    /* Lighter on hover */
+}
+
+/* Text success/danger in dark mode */
+.dark-mode .text-success {
+    color: #4ade80 !important;
+}
+
+.dark-mode .text-danger {
+    color: #f87171 !important;
+}
+
+/* Button outlines in dark mode */
+.dark-mode .btn-outline-primary {
+    border-color: #38bdf8;
+    color: #38bdf8;
+}
+
+.dark-mode .btn-outline-primary:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: #38bdf8;
+    color: #7dd3fc;
+}
+
+.dark-mode .btn-outline-warning {
+    border-color: #fbbf24;
+    color: #fbbf24;
+}
+
+.dark-mode .btn-outline-warning:hover {
+    background: rgba(251, 191, 36, 0.1);
+    border-color: #fcd34d;
+    color: #fcd34d;
+}
+
+.dark-mode .btn-outline-info {
+    border-color: #22d3ee;
+    color: #22d3ee;
+}
+
+.dark-mode .btn-outline-info:hover {
+    background: rgba(34, 211, 238, 0.1);
+    border-color: #67e8f9;
+    color: #67e8f9;
+}
+
+.dark-mode .btn-outline-danger {
+    border-color: #f87171;
+    color: #f87171;
+}
+
+.dark-mode .btn-outline-danger:hover {
+    background: rgba(248, 113, 113, 0.1);
+    border-color: #fca5a5;
+    color: #fca5a5;
+}
+
+/* Page title in dark mode */
+.dark-mode .page-title {
+    color: #f8fafc;
+}
+
+.dark-mode .page-subtitle {
+    color: #94a3b8;
+}
+
+/* Chart.js improvements for dark mode */
+.dark-mode canvas {
+    filter: brightness(1.1);
+}
+
+/* Quick Add Panel in Dark Mode */
+.dark-mode .quick-add-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .quick-add-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .quick-add-title {
+    color: #f1f5f9;
+}
+
+.dark-mode .quick-add-desc {
+    color: #94a3b8;
+}
+
+/* Slide Panel Dark Mode */
+.dark-mode .slide-panel {
+    background: var(--color-bg-card);
+    border-left: 1px solid var(--color-border);
+}
+
+.dark-mode .slide-panel-header {
+    border-bottom-color: var(--color-border);
+}
+
+.dark-mode .slide-panel-title {
+    color: #f1f5f9;
+}
+
+/* Summary Card Icon backgrounds - Higher contrast */
+.dark-mode .summary-card-icon.success {
+    background: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+}
+
+.dark-mode .summary-card-icon.danger {
+    background: rgba(248, 113, 113, 0.15);
+    color: #f87171;
+}
+
+.dark-mode .summary-card-icon.info {
+    background: rgba(96, 165, 250, 0.15);
+    color: #60a5fa;
+}
+
+.dark-mode .summary-card-icon.warning {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+}
+
+/* Small text in cards */
+.dark-mode .card small.text-muted,
+.dark-mode small.text-muted {
+    color: #64748b !important;
+}

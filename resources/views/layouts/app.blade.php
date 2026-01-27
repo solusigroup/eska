@@ -593,6 +593,20 @@
                                 </a>
                             </li>
                             <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('laporan.labarugi_proyek') ? 'active' : '' }}"
+                                    href="{{ route('laporan.labarugi_proyek') }}">
+                                    <span data-feather="folder"></span>
+                                    L/R Per Proyek
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('laporan.labarugi_konsolidasi') ? 'active' : '' }}"
+                                    href="{{ route('laporan.labarugi_konsolidasi') }}">
+                                    <span data-feather="layers"></span>
+                                    L/R Konsolidasi
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
                                 <a class="sidebar-nav-link {{ request()->routeIs('laporan.aruskas_langsung') ? 'active' : '' }}"
                                     href="{{ route('laporan.aruskas_langsung') }}">
                                     <span data-feather="activity"></span>
@@ -604,6 +618,20 @@
                                     href="{{ route('laporan.aruskas_tidak_langsung') }}">
                                     <span data-feather="activity"></span>
                                     Arus Kas (Tidak Langsung)
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('laporan.aruskas_proyek') ? 'active' : '' }}"
+                                    href="{{ route('laporan.aruskas_proyek') }}">
+                                    <span data-feather="folder"></span>
+                                    Arus Kas Per Proyek
+                                </a>
+                            </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('laporan.aruskas_konsolidasi') ? 'active' : '' }}"
+                                    href="{{ route('laporan.aruskas_konsolidasi') }}">
+                                    <span data-feather="layers"></span>
+                                    Arus Kas Konsolidasi
                                 </a>
                             </li>
                             <li class="sidebar-nav-item">
