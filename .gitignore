@@ -1,8 +1,29 @@
 
-# IDE Helper
-_ide_helper.php
-.phpstorm.meta.php
+# Laravel
+/vendor/
+/node_modules/
+/storage/*.key
+.env
+.env.backup
+.env.production
+
+# Composer
+composer.phar
+composer-setup.php
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
 # IDE Helper
 _ide_helper.php
 .phpstorm.meta.php
 _ide_helper_functions.php
+
+# Logs & Cache
+storage/logs/*.log
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
