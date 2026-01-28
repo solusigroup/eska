@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Penggunaan - SimpleAkunting ESKA</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #3730a3;
+            --secondary: #6366f1;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --border: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--dark);
+            background: var(--light);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        nav h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        nav a {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--light);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        h3 {
+            color: var(--dark);
+            font-size: 1.3rem;
+            margin: 20px 0 15px;
+        }
+
+        h4 {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin: 15px 0 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        /* Lists */
+        ul,
+        ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: var(--light);
+        }
+
+        /* Alert Boxes */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            border-color: var(--success);
+            color: #065f46;
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            border-color: var(--warning);
+            color: #92400e;
+        }
+
+        .alert-danger {
+            background: #fef2f2;
+            border-color: var(--danger);
+            color: #991b1b;
+        }
+
+        /* Code */
+        code {
+            background: #1f2937;
+            color: #10b981;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+
+        pre {
+            background: #1f2937;
+            color: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        /* Steps */
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 20px;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 35px;
+            height: 35px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Keyboard shortcuts */
+        kbd {
+            background: var(--dark);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: 'Consolas', monospace;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-superuser {
+            background: #dc2626;
+            color: white;
+        }
+
+        .badge-admin {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .badge-manajer {
+            background: #2563eb;
+            color: white;
+        }
+
+        .badge-staff {
+            background: #059669;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+            margin-top: 30px;
+        }
+
+        /* Print styles */
+        @media print {
+            nav {
+                display: none;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            .container {
+                padding: 0;
+            }
+
+            main {
+                box-shadow: none;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            main {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>📊 SimpleAkunting ESKA</h1>
+        <p>Panduan Lengkap Penggunaan Aplikasi Akuntansi</p>
+    </header>
+
+    <div class="container">
+        <nav>
+            <h3>📑 Daftar Isi</h3>
+            <ul>
+                <li><a href="#login">Login & Logout</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#master">Master Data</a></li>
+                <li><a href="#transaksi">Transaksi</a></li>
+                <li><a href="#jurnal">Jurnal & Kas</a></li>
+                <li><a href="#laporan">Laporan</a></li>
+                <li><a href="#proyek">Proyek</a></li>
+                <li><a href="#import">Import/Export</a></li>
+                <li><a href="#pengaturan">Pengaturan</a></li>
+                <li><a href="#role">Hak Akses</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <!-- LOGIN -->
+            <section id="login">
+                <h2>🔐 Login & Logout</h2>
+
+                <h3>Cara Login</h3>
+                <ol class="steps">
+                    <li>Buka aplikasi di browser: <code>https://eska.simpleakunting.my.id</code></li>
+                    <li>Masukkan <strong>Nama User</strong> dan <strong>Password</strong></li>
+                    <li>Klik tombol <strong>Login</strong></li>
+                    <li>Anda akan diarahkan ke Dashboard</li>
+                </ol>
+
+                <div class="alert alert-info">
+                    <strong>Default Login:</strong><br>
+                    Username: <code>admin</code><br>
+                    Password: <code>admin123</code>
+                </div>
+
+                <h3>Cara Logout</h3>
+                <p>Klik menu <strong>Logout</strong> di pojok kanan atas untuk keluar dari sistem.</p>
+            </section>
+
+            <!-- DASHBOARD -->
+            <section id="dashboard">
+                <h2>📈 Dashboard</h2>
+                <p>Dashboard menampilkan ringkasan data keuangan perusahaan:</p>
+                <ul>
+                    <li><strong>Total Kas & Bank</strong> - Saldo kas dan rekening bank</li>
+                    <li><strong>Total Piutang</strong> - Piutang dari pelanggan</li>
+                    <li><strong>Total Hutang</strong> - Hutang ke pemasok</li>
+                    <li><strong>Pendapatan Bulan Ini</strong> - Total penjualan bulan berjalan</li>
+                    <li><strong>Beban Bulan Ini</strong> - Total pengeluaran bulan berjalan</li>
+                </ul>
+            </section>
+
+            <!-- MASTER DATA -->
+            <section id="master">
+                <h2>📁 Master Data</h2>
+
+                <h3>Pelanggan</h3>
+                <p>Mengelola data pelanggan/customer perusahaan.</p>
+                <ul>
+                    <li><strong>Tambah Pelanggan:</strong> Menu Pelanggan → Tambah Baru</li>
+                    <li>Isi nama, alamat, telepon, email, dan saldo awal piutang</li>
+                    <li>Klik <strong>Simpan</strong></li>
+                </ul>
+
+                <h3>Pemasok</h3>
+                <p>Mengelola data supplier/vendor perusahaan.</p>
+                <ul>
+                    <li><strong>Tambah Pemasok:</strong> Menu Pemasok → Tambah Baru</li>
+                    <li>Isi nama, alamat, telepon, email, dan saldo awal hutang</li>
+                    <li>Klik <strong>Simpan</strong></li>
+                </ul>
+
+                <h3>Persediaan/Barang</h3>
+                <p>Mengelola data barang dagangan.</p>
+                <table>
+                    <tr>
+                        <th>Field</th>
+                        <th>Keterangan</th>
+                    </tr>
+                    <tr>
+                        <td>Kode Barang</td>
+                        <td>Kode unik untuk identifikasi barang</td>
+                    </tr>
+                    <tr>
+                        <td>Nama Barang</td>
+                        <td>Nama/deskripsi barang</td>
+                    </tr>
+                    <tr>
+                        <td>Satuan</td>
+                        <td>Unit (pcs, kg, liter, dll)</td>
+                    </tr>
+                    <tr>
+                        <td>Harga Beli</td>
+                        <td>Harga pembelian dari supplier</td>
+                    </tr>
+                    <tr>
+                        <td>Harga Jual</td>
+                        <td>Harga jual ke pelanggan</td>
+                    </tr>
+                    <tr>
+                        <td>Stok Awal</td>
+                        <td>Jumlah stok awal periode</td>
+                    </tr>
+                </table>
+
+                <h3>Akun (Chart of Accounts)</h3>
+                <p>Mengelola daftar akun untuk pencatatan jurnal.</p>
+                <table>
+                    <tr>
+                        <th>Tipe Akun</th>
+                        <th>Kode</th>
+                        <th>Contoh</th>
+                    </tr>
+                    <tr>
+                        <td>Kas & Bank</td>
+                        <td>1-1xxx</td>
+                        <td>Kas, Bank BCA, Bank Mandiri</td>
+                    </tr>
+                    <tr>
+                        <td>Piutang</td>
+                        <td>1-2xxx</td>
+                        <td>Piutang Usaha, Piutang Karyawan</td>
+                    </tr>
+                    <tr>
+                        <td>Persediaan</td>
+                        <td>1-3xxx</td>
+                        <td>Persediaan Barang Dagang</td>
+                    </tr>
+                    <tr>
+                        <td>Aset Tetap</td>
+                        <td>1-5xxx</td>
+                        <td>Kendaraan, Peralatan</td>
+                    </tr>
+                    <tr>
+                        <td>Kewajiban</td>
+                        <td>2-xxxx</td>
+                        <td>Utang Usaha, Utang Bank</td>
+                    </tr>
+                    <tr>
+                        <td>Modal/Ekuitas</td>
+                        <td>3-xxxx</td>
+                        <td>Modal Disetor, Laba Ditahan</td>
+                    </tr>
+                    <tr>
+                        <td>Pendapatan</td>
+                        <td>4-xxxx</td>
+                        <td>Penjualan, Pendapatan Jasa</td>
+                    </tr>
+                    <tr>
+                        <td>HPP</td>
+                        <td>5-xxxx</td>
+                        <td>Harga Pokok Penjualan</td>
+                    </tr>
+                    <tr>
+                        <td>Beban</td>
+                        <td>6-xxxx</td>
+                        <td>Beban Gaji, Beban Listrik</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- TRANSAKSI -->
+            <section id="transaksi">
+                <h2>💰 Transaksi</h2>
+
+                <h3>Penjualan</h3>
+                <ol class="steps">
+                    <li>Buka menu <strong>Penjualan</strong> → <strong>Tambah Baru</strong></li>
+                    <li>Pilih <strong>Pelanggan</strong> dari daftar</li>
+                    <li>Isi <strong>No. Faktur</strong> dan <strong>Tanggal</strong></li>
+                    <li>Tambahkan item barang yang dijual (kuantitas × harga)</li>
+                    <li>Pilih <strong>Metode Pembayaran</strong>:
+                        <ul>
+                            <li><strong>Tunai:</strong> Pembayaran langsung, pilih akun Kas/Bank</li>
+                            <li><strong>Kredit:</strong> Menjadi piutang ke pelanggan</li>
+                        </ul>
+                    </li>
+                    <li>Isi keterangan jika perlu</li>
+                    <li>Klik <strong>Simpan</strong></li>
+                </ol>
+
+                <div class="alert alert-success">
+                    <strong>✓ Otomatis:</strong> Sistem akan otomatis membuat jurnal akuntansi dan mengupdate stok
+                    barang.
+                </div>
+
+                <h3>Pembelian</h3>
+                <ol class="steps">
+                    <li>Buka menu <strong>Pembelian</strong> → <strong>Tambah Baru</strong></li>
+                    <li>Pilih <strong>Pemasok</strong> dari daftar</li>
+                    <li>Isi <strong>No. Faktur Pembelian</strong> dan <strong>Tanggal</strong></li>
+                    <li>Tambahkan item barang yang dibeli</li>
+                    <li>Pilih <strong>Metode Pembayaran</strong>:
+                        <ul>
+                            <li><strong>Tunai:</strong> Pembayaran langsung dari Kas/Bank</li>
+                            <li><strong>Kredit:</strong> Menjadi hutang ke pemasok</li>
+                        </ul>
+                    </li>
+                    <li>Klik <strong>Simpan</strong></li>
+                </ol>
+
+                <h3>Penerimaan Pembayaran</h3>
+                <p>Untuk mencatat pembayaran piutang dari pelanggan:</p>
+                <ol class="steps">
+                    <li>Menu <strong>Penerimaan</strong> → <strong>Tambah Baru</strong></li>
+                    <li>Pilih <strong>Pelanggan</strong> yang membayar</li>
+                    <li>Pilih <strong>Faktur</strong> yang akan dilunasi</li>
+                    <li>Masukkan <strong>Jumlah Bayar</strong></li>
+                    <li>Pilih <strong>Akun Kas/Bank</strong> penerima</li>
+                    <li>Klik <strong>Simpan</strong></li>
+                </ol>
+
+                <h3>Pembayaran Hutang</h3>
+                <p>Untuk mencatat pembayaran hutang ke pemasok:</p>
+                <ol class="steps">
+                    <li>Menu <strong>Pembayaran</strong> → <strong>Tambah Baru</strong></li>
+                    <li>Pilih <strong>Pemasok</strong> yang akan dibayar</li>
+                    <li>Pilih <strong>Faktur Pembelian</strong> yang akan dilunasi</li>
+                    <li>Masukkan <strong>Jumlah Bayar</strong></li>
+                    <li>Pilih <strong>Akun Kas/Bank</strong> pembayar</li>
+                    <li>Klik <strong>Simpan</strong></li>
+                </ol>
+            </section>
+
+            <!-- JURNAL & KAS -->
+            <section id="jurnal">
+                <h2>📒 Jurnal & Kas</h2>
+
+                <h3>Jurnal Umum</h3>
+                <p>Untuk mencatat transaksi yang tidak tercover oleh modul lain:</p>
+                <ol class="steps">
+                    <li>Menu <strong>Jurnal</strong> → <strong>Tambah Baru</strong></li>
+                    <li>Isi <strong>No. Transaksi</strong>, <strong>Tanggal</strong>, dan <strong>Deskripsi</strong>
+                    </li>
+                    <li>Tambahkan baris jurnal:
+                        <ul>
+                            <li>Pilih <strong>Akun</strong></li>
+                            <li>Isi <strong>Debit</strong> atau <strong>Kredit</strong></li>
+                        </ul>
+                    </li>
+                    <li>Pastikan <strong>Total Debit = Total Kredit</strong></li>
+                    <li>Klik <strong>Simpan</strong></li>
+                </ol>
+
+                <div class="alert alert-warning">
+                    <strong>⚠️ Penting:</strong> Jurnal harus balance (Debit = Kredit) agar bisa disimpan.
+                </div>
+
+                <h3>Jurnal Kas</h3>
+                <p>Pencatatan cepat untuk transaksi kas masuk dan keluar:</p>
+                <table>
+                    <tr>
+                        <th>Tipe</th>
+                        <th>Contoh Penggunaan</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Kas Masuk</strong></td>
+                        <td>Pendapatan lain-lain, bunga bank, dll</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kas Keluar</strong></td>
+                        <td>Beban operasional, biaya lain-lain</td>
+                    </tr>
+                </table>
+
+                <h3>Transfer Antar Kas/Bank</h3>
+                <p>Menu <strong>Kas</strong> → <strong>Transfer</strong> untuk memindahkan dana antar rekening.</p>
+            </section>
+
+            <!-- LAPORAN -->
+            <section id="laporan">
+                <h2>📊 Laporan Keuangan</h2>
+
+                <h3>Buku Besar</h3>
+                <p>Melihat mutasi semua akun dalam periode tertentu.</p>
+                <ul>
+                    <li>Pilih <strong>Akun</strong> yang ingin dilihat</li>
+                    <li>Tentukan <strong>Periode</strong> (tanggal awal - akhir)</li>
+                    <li>Klik <strong>Tampilkan</strong></li>
+                </ul>
+
+                <h3>Neraca</h3>
+                <p>Laporan posisi keuangan (Aset = Kewajiban + Ekuitas)</p>
+                <ul>
+                    <li>Pilih <strong>Tanggal</strong> neraca</li>
+                    <li>Klik <strong>Tampilkan</strong> atau <strong>Export PDF</strong></li>
+                </ul>
+
+                <h3>Laba Rugi</h3>
+                <p>Laporan kinerja keuangan (Pendapatan - Beban = Laba/Rugi)</p>
+                <ul>
+                    <li>Laba Rugi Umum</li>
+                    <li>Laba Rugi per Proyek</li>
+                    <li>Laba Rugi Konsolidasi</li>
+                </ul>
+
+                <h3>Arus Kas</h3>
+                <p>Laporan pergerakan kas perusahaan:</p>
+                <ul>
+                    <li><strong>Metode Langsung:</strong> Berdasarkan penerimaan dan pengeluaran kas aktual</li>
+                    <li><strong>Metode Tidak Langsung:</strong> Rekonsiliasi dari laba bersih</li>
+                    <li><strong>Per Proyek:</strong> Arus kas untuk proyek tertentu</li>
+                </ul>
+
+                <h3>Laporan Perubahan Ekuitas</h3>
+                <p>Perubahan modal pemilik selama periode.</p>
+
+                <h3>Laporan Persediaan</h3>
+                <p>Daftar barang beserta stok dan nilai persediaan.</p>
+            </section>
+
+            <!-- PROYEK -->
+            <section id="proyek">
+                <h2>🏗️ Manajemen Proyek</h2>
+
+                <h3>Membuat Proyek Baru</h3>
+                <ol class="steps">
+                    <li>Menu <strong>Proyek</strong> → <strong>Tambah Baru</strong></li>
+                    <li>Isi data proyek:
+                        <ul>
+                            <li>Kode Proyek (unik)</li>
+                            <li>Nama Proyek</li>
+                            <li>Deskripsi</li>
+                            <li>Tanggal Mulai & Selesai</li>
+                            <li>Anggaran</li>
+                            <li>Lokasi</li>
+                            <li>Pelanggan</li>
+                        </ul>
+                    </li>
+                    <li>Klik <strong>Simpan</strong></li>
+                </ol>
+
+                <h3>Assign Transaksi ke Proyek</h3>
+                <p>Setiap transaksi (Penjualan, Pembelian, Jurnal Kas) dapat di-assign ke proyek tertentu untuk tracking
+                    biaya dan pendapatan per proyek.</p>
+
+                <h3>Status Proyek</h3>
+                <table>
+                    <tr>
+                        <th>Status</th>
+                        <th>Keterangan</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-manajer">Aktif</span></td>
+                        <td>Proyek sedang berjalan</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-staff">Selesai</span></td>
+                        <td>Proyek sudah complete</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge" style="background:#6b7280;color:white">Ditunda</span></td>
+                        <td>Proyek di-hold sementara</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- IMPORT/EXPORT -->
+            <section id="import">
+                <h2>📤 Import & Export Data</h2>
+
+                <h3>Export Data</h3>
+                <p>Menu <strong>Import/Export</strong> → pilih modul → <strong>Export Excel</strong></p>
+                <p>Modul yang bisa di-export:</p>
+                <ul>
+                    <li>Pelanggan</li>
+                    <li>Pemasok</li>
+                    <li>Persediaan/Barang</li>
+                    <li>Akun (COA)</li>
+                </ul>
+
+                <h3>Import Data</h3>
+                <ol class="steps">
+                    <li>Download <strong>Template</strong> terlebih dahulu</li>
+                    <li>Isi data sesuai format template</li>
+                    <li>Upload file Excel</li>
+                    <li>Review data yang akan di-import</li>
+                    <li>Klik <strong>Import</strong></li>
+                </ol>
+
+                <h3>Import Jurnal Kas</h3>
+                <p>Untuk import transaksi kas dari file Excel (misal: dari rekening koran):</p>
+                <ol class="steps">
+                    <li>Menu <strong>Import Kas</strong></li>
+                    <li>Upload file Excel dengan kolom: Tanggal, Uraian, Uang Masuk, Uang Keluar</li>
+                    <li>Review dan mapping akun</li>
+                    <li>Pilih transaksi yang ingin diposting</li>
+                    <li>Klik <strong>Post</strong></li>
+                </ol>
+            </section>
+
+            <!-- PENGATURAN -->
+            <section id="pengaturan">
+                <h2>⚙️ Pengaturan</h2>
+
+                <h3>Data Perusahaan</h3>
+                <p>Menu <strong>Perusahaan</strong> untuk mengatur:</p>
+                <ul>
+                    <li>Nama Perusahaan</li>
+                    <li>Alamat, Telepon, Email</li>
+                    <li>Jenis Usaha (Dagang/Jasa/Konstruksi)</li>
+                    <li>Akun Default Piutang & Hutang</li>
+                    <li>Nama Direktur & Akuntan (untuk laporan)</li>
+                </ul>
+
+                <h3>Manajemen User</h3>
+                <p>Menu <strong>Users</strong> untuk mengelola pengguna sistem.</p>
+                <ol class="steps">
+                    <li>Klik <strong>Tambah User</strong></li>
+                    <li>Isi Nama User, Password, Role, dan Jabatan</li>
+                    <li>Klik <strong>Simpan</strong></li>
+                </ol>
+
+                <h3>Database Management</h3>
+                <div class="alert alert-danger">
+                    <strong>⚠️ Hanya Superuser!</strong> Menu ini hanya untuk administrasi database. Gunakan dengan
+                    hati-hati!
+                </div>
+                <ul>
+                    <li><strong>Truncate:</strong> Kosongkan data transaksi</li>
+                    <li><strong>Fresh:</strong> Reset database ke kondisi awal</li>
+                    <li><strong>Seed:</strong> Isi data contoh</li>
+                </ul>
+            </section>
+
+            <!-- HAK AKSES -->
+            <section id="role">
+                <h2>👥 Hak Akses (Role)</h2>
+
+                <table>
+                    <tr>
+                        <th>Role</th>
+                        <th>Hak Akses</th>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-superuser">Superuser</span></td>
+                        <td>
+                            <ul>
+                                <li>Semua fitur tanpa batasan</li>
+                                <li>Manajemen database</li>
+                                <li>Kelola semua user</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-admin">Admin</span></td>
+                        <td>
+                            <ul>
+                                <li>Kelola master data</li>
+                                <li>Semua transaksi</li>
+                                <li>Semua laporan</li>
+                                <li>Kelola user (kecuali superuser)</li>
+                                <li>Pengaturan perusahaan</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-manajer">Manajer</span></td>
+                        <td>
+                            <ul>
+                                <li>Lihat master data (read-only)</li>
+                                <li>Semua transaksi</li>
+                                <li>Semua laporan</li>
+                                <li>Import/Export data</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-staff">Staff</span></td>
+                        <td>
+                            <ul>
+                                <li>Input transaksi</li>
+                                <li>Lihat laporan</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+        </main>
+
+        <footer>
+            <p>📊 <strong>SimpleAkunting ESKA</strong> &copy; 2026</p>
+            <p>Dokumentasi dibuat pada 28 Januari 2026</p>
+        </footer>
+    </div>
+</body>
+
+</html>

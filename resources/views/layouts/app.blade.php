@@ -708,6 +708,16 @@
                     </div>
                 </div>
             @endif
+
+            <!-- Panduan Pengguna -->
+            <ul class="sidebar-nav mt-3" style="border-top: 1px solid var(--color-border-light); padding-top: 15px;">
+                <li class="sidebar-nav-item">
+                    <a class="sidebar-nav-link" href="{{ asset('docs/panduan-pengguna.html') }}" target="_blank">
+                        <span data-feather="help-circle"></span>
+                        Panduan Pengguna
+                    </a>
+                </li>
+            </ul>
         </div>
     </aside>
 
