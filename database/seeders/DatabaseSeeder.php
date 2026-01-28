@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,10 +13,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Create default superuser (tanpa factory untuk production)
+        // Note: password_hash sudah di-cast sebagai 'hashed' di model User
         User::updateOrCreate(
             ['nama_user' => 'admin'],
             [
-                'password_hash' => Hash::make('admin123'),
+                'password_hash' => 'admin123',  // akan auto-hash oleh cast
                 'role' => 'superuser',
                 'jabatan' => 'Administrator',
             ]
