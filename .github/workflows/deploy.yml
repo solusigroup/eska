@@ -1,0 +1,26 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: $103.153.3.177
+        username: $kurniawan.simpleakunting
+        key: $ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0tcCcfznmLo44O7bOLStHLM7bkvAxU92OeH/36xQj6 deploy-vps
+        port: $49151
+        script: |
+          cd /var/www/simpleakunting.id
+          git pull origin main
+          # Perintah optimasi (sesuai stack Anda)
+          composer install --no-dev --optimize-autoloader
+          php artisan migrate --force
+          php artisan optimize:clear
+          # Jika menggunakan Docker:
+          # docker-compose up -d --build
