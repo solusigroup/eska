@@ -5,7 +5,7 @@
 # ======================================================================
 
 # Konfigurasi
-PROJECT_PATH="/home/kurniawan/simpleakunting_eska"
+PROJECT_PATH="/www/wwwroot/simpleakunting_eska"
 PHP_BIN="php" # Ganti dengan path PHP spesifik jika perlu, misal: /www/server/php/82/bin/php
 COMPOSER_BIN="composer" # Ganti dengan path Composer jika perlu
 
