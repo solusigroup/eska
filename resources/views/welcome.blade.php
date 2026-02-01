@@ -385,10 +385,10 @@
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label class="form-label">Alamat Email</label>
+                        <label class="form-label">Username</label>
                         <div class="input-wrapper">
-                            <i data-lucide="mail" class="input-icon"></i>
-                            <input type="email" name="email" class="form-input" placeholder="nama@perusahaan.com" required value="{{ old('email') }}">
+                            <i data-lucide="user" class="input-icon"></i>
+                            <input type="text" name="nama_user" class="form-input" placeholder="Masukkan username" required value="{{ old('nama_user') }}">
                         </div>
                     </div>
 
