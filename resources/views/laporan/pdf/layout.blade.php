@@ -194,14 +194,14 @@
                 <tr>
                     <td>
                         <p>Mengetahui,</p>
-                        <p><strong>Direktur</strong></p>
+                        <p><strong>{{ $perusahaan->jabatan_direktur ?? 'Direktur' }}</strong></p>
                         <div class="signature-line"></div>
                         <p>{{ $perusahaan->nama_direktur ?? '________________' }}</p>
                     </td>
                     <td></td>
                     <td>
                         <p>Dibuat oleh,</p>
-                        <p><strong>Bag. Keuangan</strong></p>
+                        <p><strong>{{ $perusahaan->jabatan_akuntan ?? 'Bag. Keuangan' }}</strong></p>
                         <div class="signature-line"></div>
                         <p>{{ $perusahaan->nama_akuntan ?? '________________' }}</p>
                     </td>

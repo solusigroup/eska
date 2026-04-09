@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" class="dark-mode">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Set theme before rendering
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark-mode');
+        } else {
+            document.documentElement.classList.remove('dark-mode');
+        }
+    </script>
     <title>@yield('title', 'Simple Akunting')</title>
 
     <!-- Google Fonts -->
@@ -363,6 +371,9 @@
             </a>
         </div>
         <div class="header-actions">
+            <button id="themeToggleBtn" class="btn-logout me-2" type="button" aria-label="Toggle Theme" title="Ganti Tema" style="padding: 6px 10px; background: rgba(255, 255, 255, 0.1);">
+                <span data-feather="moon" id="themeIcon"></span>
+            </button>
             <span class="text-white d-none d-md-inline" style="opacity: 0.8; font-size: 0.875rem;">
                 {{ Auth::user()->nama_user }}
             </span>
@@ -791,6 +802,29 @@
     <script>
         (function () {
             'use strict'
+
+            // Theme Toggle Logic
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const themeIcon = document.getElementById('themeIcon');
+            const isDarkMode = document.documentElement.classList.contains('dark-mode');
+            
+            if (themeIcon) {
+                themeIcon.setAttribute('data-feather', isDarkMode ? 'sun' : 'moon');
+            }
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark-mode');
+                    const isDarkNow = document.documentElement.classList.contains('dark-mode');
+                    
+                    localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+                    
+                    if (themeIcon) {
+                        themeIcon.setAttribute('data-feather', isDarkNow ? 'sun' : 'moon');
+                        feather.replace();
+                    }
+                });
+            }
 
             // Initialize Feather Icons
             feather.replace({ 'aria-hidden': 'true' });

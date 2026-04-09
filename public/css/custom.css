@@ -1721,3 +1721,114 @@ body.dark-mode {
 .dark-mode small.text-muted {
     color: #64748b !important;
 }
+
+/* ========================================
+   GLOBAL DARK MODE & FORM CONTRAST FIXES
+======================================== */
+.dark-mode {
+    --color-bg: #0f172a;
+    --color-bg-card: #1e293b;
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+    --color-text-light: #64748b;
+    --color-border: #334155;
+    --color-border-light: #1e293b;
+}
+
+html.dark-mode body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+.dark-mode .form-card,
+.dark-mode .card,
+.dark-mode .app-sidebar,
+.dark-mode .bottom-nav,
+.dark-mode .auth-card {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+}
+
+.dark-mode .form-control,
+.dark-mode .form-select {
+    background-color: #0f172a;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+.dark-mode .form-control:focus,
+.dark-mode .form-select:focus {
+    border-color: var(--color-info);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dark-mode .form-control::placeholder {
+    color: #64748b;
+}
+
+.dark-mode .form-label {
+    color: #cbd5e1;
+}
+
+.dark-mode .btn-outline {
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+.dark-mode .btn-outline:hover {
+    background-color: #1e293b;
+}
+
+.dark-mode .sidebar-nav-link {
+    color: #cbd5e1;
+}
+.dark-mode .sidebar-nav-link:hover {
+    background: #0f172a;
+}
+.dark-mode .sidebar-nav-link.active {
+    background: rgba(56, 189, 248, 0.1);
+}
+.dark-mode .page-header-actions {
+    border-bottom-color: var(--color-border);
+}
+.dark-mode .table-card {
+    background: var(--color-bg-card);
+}
+
+/* Fix Bootstrap Table Contextual Classes for Dark Mode */
+.dark-mode .table-primary > td, .dark-mode .table-primary > th, .dark-mode .table-primary {
+    background-color: rgba(59, 130, 246, 0.15) !important;
+    color: #f1f5f9 !important;
+    box-shadow: none !important;
+}
+.dark-mode .table-secondary > td, .dark-mode .table-secondary > th, .dark-mode .table-secondary {
+    background-color: rgba(100, 116, 139, 0.15) !important;
+    color: #f1f5f9 !important;
+    box-shadow: none !important;
+}
+.dark-mode .table-success > td, .dark-mode .table-success > th, .dark-mode .table-success {
+    background-color: rgba(16, 185, 129, 0.15) !important;
+    color: #f1f5f9 !important;
+    box-shadow: none !important;
+}
+.dark-mode .table-info > td, .dark-mode .table-info > th, .dark-mode .table-info {
+    background-color: rgba(6, 182, 212, 0.15) !important;
+    color: #f1f5f9 !important;
+    box-shadow: none !important;
+}
+.dark-mode .table-warning > td, .dark-mode .table-warning > th, .dark-mode .table-warning {
+    background-color: rgba(245, 158, 11, 0.15) !important;
+    color: #f1f5f9 !important;
+    box-shadow: none !important;
+}
+.dark-mode .table-danger > td, .dark-mode .table-danger > th, .dark-mode .table-danger {
+    background-color: rgba(239, 68, 68, 0.15) !important;
+    color: #f1f5f9 !important;
+    box-shadow: none !important;
+}
+.dark-mode .table-light > td, .dark-mode .table-light > th, .dark-mode .table-light,
+.dark-mode .bg-light > td, .dark-mode .bg-light > th, .dark-mode .bg-light {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: #f1f5f9 !important;
+    box-shadow: none !important;
+}

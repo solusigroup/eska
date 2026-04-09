@@ -186,13 +186,13 @@
                     <p>Mengetahui,</p>
                     <br><br><br>
                     <p class="fw-bold text-decoration-underline">{{ $perusahaan->nama_direktur ?? '(....................)' }}</p>
-                    <p>Direktur</p>
+                    <p>{{ $perusahaan->jabatan_direktur ?? 'Direktur' }}</p>
                 </div>
                 <div class="col-md-4">
                     <p>Dibuat Oleh,</p>
                     <br><br><br>
                     <p class="fw-bold text-decoration-underline">{{ $perusahaan->nama_akuntan ?? '(....................)' }}</p>
-                    <p>Akuntan</p>
+                    <p>{{ $perusahaan->jabatan_akuntan ?? 'Akuntan' }}</p>
                 </div>
             </div>
         </div>

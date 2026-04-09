@@ -28,7 +28,9 @@ class PerusahaanController extends Controller
             'telepon' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
             'jenis_usaha' => 'required|in:dagang,simpan_pinjam,serba_usaha,jasa',
+            'jabatan_direktur' => 'nullable|string|max:255',
             'nama_direktur' => 'nullable|string|max:255',
+            'jabatan_akuntan' => 'nullable|string|max:255',
             'nama_akuntan' => 'nullable|string|max:255',
         ]);
 
@@ -40,7 +42,9 @@ class PerusahaanController extends Controller
                 'telepon' => $request->telepon,
                 'email' => $request->email,
                 'jenis_usaha' => $request->jenis_usaha,
+                'jabatan_direktur' => $request->jabatan_direktur,
                 'nama_direktur' => $request->nama_direktur,
+                'jabatan_akuntan' => $request->jabatan_akuntan,
                 'nama_akuntan' => $request->nama_akuntan,
                 'updated_at' => now(),
             ]

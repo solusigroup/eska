@@ -70,8 +70,18 @@
                         <h5 class="mt-4">Pejabat Penandatangan</h5>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label for="nama_direktur" class="form-label">Nama Direktur</label>
+                                <label for="jabatan_direktur" class="form-label">Jabatan Pimpinan</label>
+                                <input type="text" class="form-control" id="jabatan_direktur" name="jabatan_direktur" value="{{ $perusahaan->jabatan_direktur ?? 'Direktur' }}" placeholder="Opsional (Default: Direktur)">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="nama_direktur" class="form-label">Nama Pimpinan / Direktur</label>
                                 <input type="text" class="form-control" id="nama_direktur" name="nama_direktur" value="{{ $perusahaan->nama_direktur ?? '' }}">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="jabatan_akuntan" class="form-label">Jabatan Keuangan</label>
+                                <input type="text" class="form-control" id="jabatan_akuntan" name="jabatan_akuntan" value="{{ $perusahaan->jabatan_akuntan ?? 'Akuntan' }}" placeholder="Opsional (Default: Akuntan)">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="nama_akuntan" class="form-label">Nama Akuntan / Bag. Keuangan</label>
