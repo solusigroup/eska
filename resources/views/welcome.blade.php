@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="SimpleAkunting - Solution for modern accounting. Manage your finances with ease.">
+    <meta name="description" content="Setia Kawan - Solusi akuntansi modern untuk bisnis Anda. Kelola keuangan dengan mudah dan presisi.">
     
-    <title>{{ config('app.name', 'SimpleAkunting') }} - Partner Access Portal</title>
+    <title>Setia Kawan - Partner Access Portal</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,8 +19,8 @@
         :root {
             --color-bg-dark: #020617;
             --color-surface-dark: #0f172a;
-            --color-accent: #f97316; /* Orange from reference */
-            --color-accent-hover: #ea580c;
+            --color-accent: #34d1c4; /* Matching the logo's teal */
+            --color-accent-hover: #28a89e;
             --color-text: #f8fafc;
             --color-text-muted: #94a3b8;
             --font-family: 'Inter', -apple-system, sans-serif;
@@ -338,8 +338,7 @@
         <!-- Left Panel: Hero Section -->
         <div class="hero-panel">
             <div class="logo-container">
-                <div class="logo-box">S</div>
-                <span class="logo-text">SimpleAkunting</span>
+                <img src="{{ asset('assets/images/logo.png') }}" alt="Setia Kawan Logo" style="height: 60px; object-fit: contain;">
             </div>
             
             <div class="hero-content">

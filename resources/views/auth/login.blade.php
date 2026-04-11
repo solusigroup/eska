@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SimpleAkunting</title>
+    <title>Login - Setia Kawan</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,8 +17,8 @@
         :root {
             --color-bg-dark: #020617;
             --color-surface-dark: #0f172a;
-            --color-accent: #f97316;
-            --color-accent-hover: #ea580c;
+            --color-accent: #34d1c4;
+            --color-accent-hover: #28a89e;
             --color-text: #f8fafc;
             --color-text-muted: #94a3b8;
             --font-family: 'Inter', -apple-system, sans-serif;
@@ -274,8 +274,7 @@
         <!-- Left Panel -->
         <div class="hero-panel">
             <div class="logo-container">
-                <div class="logo-box">S</div>
-                <span class="logo-text">SimpleAkunting</span>
+                <img src="{{ asset('assets/images/logo.png') }}" alt="Setia Kawan Logo" style="height: 60px; object-fit: contain;">
             </div>
             
             <div class="hero-content">
