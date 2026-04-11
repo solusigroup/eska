@@ -413,7 +413,7 @@
 
         function togglePassword(inputId, button) {
             const input = document.getElementById(inputId);
-            const icon = button.querySelector('i');
+            const icon = button.querySelector('i, svg');
             
             if (input.type === 'password') {
                 input.type = 'text';
