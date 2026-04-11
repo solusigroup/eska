@@ -271,6 +271,32 @@
             border: 1px solid rgba(239, 68, 68, 0.2);
         }
 
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+            z-index: 10;
+        }
+
+        .password-toggle:hover {
+            color: var(--color-accent);
+        }
+
+        .toggle-icon {
+            width: 18px;
+            height: 18px;
+        }
+
         @media (max-width: 1200px) {
             .hero-panel { display: none; }
             .register-panel { width: 100%; max-width: 600px; margin: 0 auto; }
@@ -334,14 +360,20 @@
                         <label class="form-label">Password</label>
                         <div class="input-wrapper">
                             <i data-lucide="lock" class="input-icon"></i>
-                            <input type="password" name="password" class="form-input" placeholder="••••••••" required>
+                            <input type="password" id="register-password" name="password" class="form-input" placeholder="••••••••" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('register-password', this)">
+                                <i data-lucide="eye" class="toggle-icon"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Konfirmasi</label>
                         <div class="input-wrapper">
                             <i data-lucide="shield-check" class="input-icon"></i>
-                            <input type="password" name="password_confirmation" class="form-input" placeholder="••••••••" required>
+                            <input type="password" id="password_confirmation" name="password_confirmation" class="form-input" placeholder="••••••••" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('password_confirmation', this)">
+                                <i data-lucide="eye" class="toggle-icon"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -378,6 +410,21 @@
 
     <script>
         lucide.createIcons();
+
+        function togglePassword(inputId, button) {
+            const input = document.getElementById(inputId);
+            const icon = button.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            
+            lucide.createIcons();
+        }
     </script>
 </body>
 </html>

@@ -875,6 +875,27 @@
                 document.body.style.overflow = '';
             };
 
+            // Global Password Toggle
+            window.togglePassword = function (inputId, button) {
+                const input = document.getElementById(inputId);
+                const icon = button.querySelector('i');
+                const isLucide = icon.hasAttribute('data-lucide');
+                const isFeather = icon.hasAttribute('data-feather');
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    if (isLucide) icon.setAttribute('data-lucide', 'eye-off');
+                    if (isFeather) icon.setAttribute('data-feather', 'eye-off');
+                } else {
+                    input.type = 'password';
+                    if (isLucide) icon.setAttribute('data-lucide', 'eye');
+                    if (isFeather) icon.setAttribute('data-feather', 'eye');
+                }
+                
+                if (isLucide && typeof lucide !== 'undefined') lucide.createIcons();
+                if (isFeather && typeof feather !== 'undefined') feather.replace();
+            };
+
             // Close slide panel on Escape key
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {

@@ -27,14 +27,24 @@
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
+                            <div class="input-wrapper">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('password', this)">
+                                    <i data-feather="eye"></i>
+                                </button>
+                            </div>
                             @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mb-3">
                             <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                            <div class="input-wrapper">
+                                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('password_confirmation', this)">
+                                    <i data-feather="eye"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="role" class="form-label">Role</label>
