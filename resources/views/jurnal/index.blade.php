@@ -17,6 +17,19 @@
         </div>
     </div>
 
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <!-- Table Card -->
     <div class="table-card">
         <div class="table-responsive">
@@ -42,10 +55,20 @@
                                 </span>
                             </td>
                             <td>
-                                <div class="action-buttons">
+                                <div class="action-buttons" style="display: flex; gap: 4px;">
                                     <a href="{{ route('jurnal.show', $j->id_jurnal) }}" class="btn btn-sm btn-primary">
                                         Detail
                                     </a>
+                                    @if ($j->sumber_jurnal == 'Manual' && !$j->is_locked)
+                                        <a href="{{ route('jurnal.edit', $j->id_jurnal) }}" class="btn btn-sm btn-warning">
+                                            Edit
+                                        </a>
+                                        <form action="{{ route('jurnal.destroy', $j->id_jurnal) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus jurnal ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                        </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

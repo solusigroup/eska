@@ -101,6 +101,10 @@
                                 <td class="text-end fw-medium">Rp {{ number_format($jk->jumlah, 0, ',', '.') }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm">
+                                        <a href="{{ route('jurnal-kas.show', $jk->id_jurnal_kas) }}"
+                                            class="btn btn-outline-primary" title="Detail">
+                                            <span data-feather="eye"></span>
+                                        </a>
                                         <a href="{{ route('jurnal-kas.edit', $jk->id_jurnal_kas) }}"
                                             class="btn btn-outline-secondary" title="Edit">
                                             <span data-feather="edit-2"></span>

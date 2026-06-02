@@ -5,10 +5,20 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Detail Jurnal #{{ $jurnal->no_transaksi }}</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-toolbar mb-2 mb-md-0 gap-2">
             <a href="{{ route('jurnal.index') }}" class="btn btn-sm btn-secondary">
                 Kembali
             </a>
+            @if ($jurnal->sumber_jurnal == 'Manual' && !$jurnal->is_locked)
+                <a href="{{ route('jurnal.edit', $jurnal->id_jurnal) }}" class="btn btn-sm btn-warning">
+                    Edit
+                </a>
+                <form action="{{ route('jurnal.destroy', $jurnal->id_jurnal) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus jurnal ini?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                </form>
+            @endif
         </div>
     </div>
 

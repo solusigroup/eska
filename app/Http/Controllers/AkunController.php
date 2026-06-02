@@ -25,9 +25,13 @@ class AkunController extends Controller
             'nama_akun' => 'required|string|max:255',
             'tipe_akun' => 'required|string',
             'saldo_normal' => 'required|in:Debit,Kredit',
+            'saldo_awal' => 'nullable|numeric',
         ]);
 
-        Akun::create($request->all());
+        $data = $request->all();
+        $data['saldo_awal'] = $request->filled('saldo_awal') ? (float)$request->saldo_awal : 0;
+
+        Akun::create($data);
 
         return redirect()->route('akun.index')->with('success', 'Akun berhasil ditambahkan.');
     }
@@ -43,9 +47,13 @@ class AkunController extends Controller
             'nama_akun' => 'required|string|max:255',
             'tipe_akun' => 'required|string',
             'saldo_normal' => 'required|in:Debit,Kredit',
+            'saldo_awal' => 'nullable|numeric',
         ]);
 
-        $akun->update($request->all());
+        $data = $request->all();
+        $data['saldo_awal'] = $request->filled('saldo_awal') ? (float)$request->saldo_awal : 0;
+
+        $akun->update($data);
 
         return redirect()->route('akun.index')->with('success', 'Akun berhasil diperbarui.');
     }

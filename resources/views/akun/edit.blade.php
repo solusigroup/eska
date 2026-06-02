@@ -53,6 +53,13 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="mb-3">
+                            <label for="saldo_awal" class="form-label">Saldo Awal</label>
+                            <input type="number" step="0.01" class="form-control @error('saldo_awal') is-invalid @enderror" id="saldo_awal" name="saldo_awal" value="{{ old('saldo_awal', $akun->saldo_awal) }}" required>
+                            @error('saldo_awal')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
