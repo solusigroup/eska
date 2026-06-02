@@ -360,9 +360,11 @@
                 <li><a href="#login">Login & Logout</a></li>
                 <li><a href="#dashboard">Dashboard</a></li>
                 <li><a href="#master">Master Data</a></li>
+                <li><a href="#aset-tetap">Aset Tetap & Depresiasi</a></li>
                 <li><a href="#transaksi">Transaksi</a></li>
                 <li><a href="#jurnal">Jurnal & Kas</a></li>
                 <li><a href="#laporan">Laporan</a></li>
+                <li><a href="#tutup-buku">Tutup Buku & Diagnosa</a></li>
                 <li><a href="#proyek">Proyek</a></li>
                 <li><a href="#import">Import/Export</a></li>
                 <li><a href="#pengaturan">Pengaturan</a></li>
@@ -460,7 +462,7 @@
                 </table>
 
                 <h3>Akun (Chart of Accounts)</h3>
-                <p>Mengelola daftar akun untuk pencatatan jurnal.</p>
+                <p>Mengelola daftar akun untuk pencatatan jurnal. <strong>Pembaruan Terkini:</strong> Sekarang setiap Akun dilengkapi dengan kolom <strong>Saldo Awal</strong> yang dapat diisi saat membuat atau mengedit akun untuk mencatat saldo pembukuan awal.</p>
                 <table>
                     <tr>
                         <th>Tipe Akun</th>
@@ -513,6 +515,43 @@
                         <td>Beban Gaji, Beban Listrik</td>
                     </tr>
                 </table>
+            </section>
+
+            <!-- ASET TETAP -->
+            <section id="aset-tetap">
+                <h2>🏢 Aset Tetap & Depresiasi</h2>
+                <p>Modul Aset Tetap digunakan untuk mengelola aset jangka panjang perusahaan serta melakukan perhitungan penyusutan secara berkala.</p>
+
+                <h3>1. Master Aset Tetap</h3>
+                <p>Mencatat aset baru yang dibeli oleh perusahaan:</p>
+                <ol class="steps">
+                    <li>Buka menu <strong>Aset Tetap</strong> → <strong>Tambah Baru</strong></li>
+                    <li>Isi informasi aset tetap:
+                        <ul>
+                            <li><strong>Nama Aset:</strong> Nama aset (misal: Komputer Kantor)</li>
+                            <li><strong>Nilai Perolehan:</strong> Harga beli aset</li>
+                            <li><strong>Masa Manfaat:</strong> Jumlah bulan masa pakai ekonomis</li>
+                            <li><strong>Tanggal Perolehan:</strong> Tanggal saat aset diperoleh/dibeli</li>
+                            <li><strong>Akun Aset:</strong> Akun COA Aset (debit saat beli)</li>
+                            <li><strong>Akun Akumulasi:</strong> Akun akumulasi penyusutan (kredit saat depresiasi)</li>
+                            <li><strong>Akun Beban Depresiasi:</strong> Akun beban penyusutan (debit saat depresiasi)</li>
+                        </ul>
+                    </li>
+                    <li>Klik <strong>Simpan</strong></li>
+                </ol>
+
+                <h3>2. Proses Depresiasi Bulanan</h3>
+                <p>Aplikasi menggunakan metode <strong>Garis Lurus (Straight Line)</strong> secara otomatis:</p>
+                <ol class="steps">
+                    <li>Buka menu <strong>Aset Tetap</strong> → <strong>Depresiasi Aset</strong></li>
+                    <li>Pilih <strong>Bulan dan Tahun</strong> periode penyusutan</li>
+                    <li>Klik <strong>Proses Depresiasi</strong></li>
+                    <li>Sistem akan otomatis menghitung nilai depresiasi bulanan untuk semua aset aktif dan memposting Jurnal Umum depresiasi.</li>
+                </ol>
+
+                <div class="alert alert-info">
+                    <strong>Pembatalan Depresiasi:</strong> Riwayat depresiasi bulanan dapat dihapus/dibatalkan melalui tab Riwayat Depresiasi. Jurnal umum terkait juga akan dihapus secara otomatis.
+                </div>
             </section>
 
             <!-- TRANSAKSI -->
@@ -602,6 +641,11 @@
                     <strong>⚠️ Penting:</strong> Jurnal harus balance (Debit = Kredit) agar bisa disimpan.
                 </div>
 
+                <div class="alert alert-info">
+                    <strong>Fitur Baru: Update & Delete Jurnal</strong><br>
+                    Sekarang Anda dapat mengedit (Update) dan menghapus (Delete) jurnal manual dan jurnal kas langsung dari tombol aksi yang tersedia di tabel daftar jurnal. Fitur ini hanya berlaku untuk jurnal yang berstatus <strong>Manual</strong> dan tidak berstatus <strong>Locked</strong> (dikunci oleh sistem).
+                </div>
+
                 <h3>Jurnal Kas</h3>
                 <p>Pencatatan cepat untuk transaksi kas masuk dan keluar:</p>
                 <table>
@@ -626,6 +670,10 @@
             <!-- LAPORAN -->
             <section id="laporan">
                 <h2>📊 Laporan Keuangan</h2>
+
+                <div class="alert alert-success">
+                    <strong>💡 Fitur Export:</strong> Semua laporan keuangan kini dilengkapi dengan tombol <strong>Export PDF</strong> dan <strong>Export Excel</strong> untuk mempermudah pelaporan, analisis, dan pencetakan data.
+                </div>
 
                 <h3>Buku Besar</h3>
                 <p>Melihat mutasi semua akun dalam periode tertentu.</p>
@@ -663,6 +711,38 @@
 
                 <h3>Laporan Persediaan</h3>
                 <p>Daftar barang beserta stok dan nilai persediaan.</p>
+            </section>
+
+            <!-- TUTUP BUKU & DIAGNOSA -->
+            <section id="tutup-buku">
+                <h2>🔒 Tutup Buku & Diagnosa Neraca</h2>
+                
+                <h3>1. Diagnosa Keseimbangan Neraca</h3>
+                <p>Fitur diagnosa digunakan untuk mengecek kesehatan data pembukuan sebelum melakukan tutup buku atau pelaporan:</p>
+                <ul>
+                    <li>Mendeteksi jurnal tidak seimbang (debit ≠ kredit)</li>
+                    <li>Mengecek jika ada jurnal tanpa detail transaksi</li>
+                    <li>Mendeteksi adanya kode akun tidak valid / akun terhapus di detail jurnal</li>
+                    <li><strong>Cara Akses:</strong> Buka menu <strong>Diagnosa Keseimbangan Neraca</strong> di sidebar untuk melihat status deteksi kesehatan.</li>
+                </ul>
+
+                <h3>2. Tutup Buku Akhir Periode</h3>
+                <p>Tutup Buku berfungsi untuk mengunci transaksi pada periode tertentu dan menutup akun riil pendapatan/beban:</p>
+                <ol class="steps">
+                    <li>Buka menu <strong>Tutup Buku</strong></li>
+                    <li>Tentukan <strong>Tanggal Tutup Buku</strong></li>
+                    <li>Sistem akan melakukan validasi. Jika semua jurnal balance dan sehat, proses dapat dilanjutkan</li>
+                    <li>Klik <strong>Proses Tutup Buku</strong></li>
+                </ol>
+
+                <div class="alert alert-warning">
+                    <strong>Efek Tutup Buku:</strong><br>
+                    1. Semua transaksi baru atau pengeditan transaksi pada atau sebelum tanggal tutup buku akan <strong>dikunci (ditolak)</strong>.<br>
+                    2. Saldo akun Pendapatan dan Beban akan dinihilkan (di-nol-kan) dan dipindahkan ke akun Laba Ditahan (<code>3-30000</code>) melalui Jurnal Penutup otomatis (kode: <code>CL-YYYYMMDD</code>).
+                </div>
+
+                <h3>Re-open (Buka Kembali Periode)</h3>
+                <p>Jika ada koreksi transaksi pada periode yang telah dikunci, pengguna dengan role <strong>Superuser</strong> atau <strong>Admin</strong> dapat membuka kembali periode dengan menghapus entri tutup buku terkait pada daftar riwayat tutup buku.</p>
             </section>
 
             <!-- PROYEK -->
