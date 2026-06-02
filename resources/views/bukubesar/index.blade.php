@@ -38,9 +38,19 @@
 
     @if($selectedAkun)
         <div class="card">
-            <div class="card-header">
-                <strong>{{ $selectedAkun->kode_akun }} - {{ $selectedAkun->nama_akun }}</strong>
-                <span class="float-end">Saldo Normal: {{ $selectedAkun->saldo_normal }}</span>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>{{ $selectedAkun->kode_akun }} - {{ $selectedAkun->nama_akun }}</strong>
+                    <span class="ms-2 badge bg-secondary">Saldo Normal: {{ $selectedAkun->saldo_normal }}</span>
+                </div>
+                <div class="btn-group">
+                    <a href="{{ route('bukubesar.pdf', ['kode_akun' => $kodeAkun, 'start_date' => $startDate, 'end_date' => $endDate]) }}" class="btn btn-sm btn-outline-danger">
+                        <span data-feather="file-text"></span> Cetak PDF
+                    </a>
+                    <a href="{{ route('bukubesar.excel', ['kode_akun' => $kodeAkun, 'start_date' => $startDate, 'end_date' => $endDate]) }}" class="btn btn-sm btn-outline-success">
+                        <span data-feather="file"></span> Ekspor Excel
+                    </a>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered mb-0">

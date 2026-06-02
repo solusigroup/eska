@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class JurnalKasController extends Controller
 {
+    use \App\Traits\CheckLockedPeriod;
+
     /**
      * Display a listing of cash journal entries.
      */
@@ -71,6 +73,8 @@ class JurnalKasController extends Controller
      */
     public function store(Request $request)
     {
+        $this->checkLockedPeriod($request->tanggal);
+
         $validated = $request->validate([
             'no_bukti' => 'required|string|max:50|unique:jurnal_kas,no_bukti',
             'tanggal' => 'required|date',
@@ -123,6 +127,9 @@ class JurnalKasController extends Controller
     {
         $jurnalKas = JurnalKas::findOrFail($id);
 
+        $this->checkLockedPeriod($request->tanggal);
+        $this->checkLockedPeriod($jurnalKas->tanggal);
+
         $validated = $request->validate([
             'no_bukti' => 'required|string|max:50|unique:jurnal_kas,no_bukti,' . $id . ',id_jurnal_kas',
             'tanggal' => 'required|date',
@@ -147,6 +154,8 @@ class JurnalKasController extends Controller
     public function destroy($id)
     {
         $jurnalKas = JurnalKas::findOrFail($id);
+
+        $this->checkLockedPeriod($jurnalKas->tanggal);
 
         // JurnalKas model will auto-delete jurnal_umum via boot events
         $jurnalKas->delete();

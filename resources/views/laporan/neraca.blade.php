@@ -25,6 +25,9 @@
                     <a href="{{ route('laporan.neraca.pdf', request()->all()) }}" class="btn btn-danger" target="_blank">
                         <span data-feather="file-text"></span> PDF
                     </a>
+                    <a href="{{ route('laporan.neraca.excel', request()->all()) }}" class="btn btn-success">
+                        <span data-feather="file"></span> Excel
+                    </a>
                 </div>
             </form>
         </div>

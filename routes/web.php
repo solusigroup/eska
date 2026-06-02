@@ -31,6 +31,9 @@ use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\JurnalKasController;
+use App\Http\Controllers\AsetTetapController;
+use App\Http\Controllers\TutupBukuController;
+use App\Http\Controllers\DiagnosaController;
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
@@ -70,6 +73,20 @@ Route::middleware('auth')->group(function () {
         Route::get('akun/{akun}/edit', [AkunController::class, 'edit'])->name('akun.edit');
         Route::put('akun/{akun}', [AkunController::class, 'update'])->name('akun.update');
         Route::delete('akun/{akun}', [AkunController::class, 'destroy'])->name('akun.destroy');
+
+        // Aset Tetap Write Routes
+        Route::get('aset-tetap/create', [AsetTetapController::class, 'create'])->name('aset-tetap.create');
+        Route::post('aset-tetap', [AsetTetapController::class, 'store'])->name('aset-tetap.store');
+        Route::get('aset-tetap/{id}/edit', [AsetTetapController::class, 'edit'])->name('aset-tetap.edit');
+        Route::put('aset-tetap/{id}', [AsetTetapController::class, 'update'])->name('aset-tetap.update');
+        Route::delete('aset-tetap/{id}', [AsetTetapController::class, 'destroy'])->name('aset-tetap.destroy');
+        Route::post('aset-tetap/depresiasi', [AsetTetapController::class, 'processDepresiasi'])->name('aset-tetap.depresiasi.proses');
+        Route::delete('aset-tetap/depresiasi/{id}', [AsetTetapController::class, 'destroyDepresiasi'])->name('aset-tetap.depresiasi.destroy');
+
+        // Tutup Buku Routes (Wholly Admin/Superuser)
+        Route::get('tutup-buku', [TutupBukuController::class, 'index'])->name('tutup-buku.index');
+        Route::post('tutup-buku', [TutupBukuController::class, 'closePeriod'])->name('tutup-buku.store');
+        Route::delete('tutup-buku/{id}', [TutupBukuController::class, 'cancelPeriod'])->name('tutup-buku.destroy');
     });
 
     // Read-only routes for manajer (index, show)
@@ -81,6 +98,11 @@ Route::middleware('auth')->group(function () {
         Route::get('pemasok/{pemasok}', [PemasokController::class, 'show'])->name('pemasok.show');
         Route::get('persediaan', [PersediaanController::class, 'index'])->name('persediaan.index');
         Route::get('akun', [AkunController::class, 'index'])->name('akun.index');
+
+        // Aset Tetap & Diagnosa
+        Route::get('aset-tetap', [AsetTetapController::class, 'index'])->name('aset-tetap.index');
+        Route::get('aset-tetap/depresiasi', [AsetTetapController::class, 'showDepresiasiForm'])->name('aset-tetap.depresiasi');
+        Route::get('diagnosa', [DiagnosaController::class, 'index'])->name('diagnosa.index');
     });
 
     // =====================================================
@@ -112,19 +134,49 @@ Route::middleware('auth')->group(function () {
     // =====================================================
     Route::middleware('role:superuser,admin,manajer,staff')->group(function () {
         Route::get('bukubesar', [BukuBesarController::class, 'index'])->name('bukubesar.index');
+        Route::get('bukubesar/pdf', [BukuBesarController::class, 'exportPdf'])->name('bukubesar.pdf');
+        Route::get('bukubesar/excel', [BukuBesarController::class, 'exportExcel'])->name('bukubesar.excel');
+
         Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
         Route::get('/laporan/neraca', [LaporanController::class, 'neraca'])->name('laporan.neraca');
         Route::get('/laporan/neraca/pdf', [LaporanController::class, 'neracaPdf'])->name('laporan.neraca.pdf');
+        Route::get('/laporan/neraca/excel', [LaporanController::class, 'neracaExcel'])->name('laporan.neraca.excel');
+
         Route::get('/laporan/labarugi', [LaporanController::class, 'labaRugi'])->name('laporan.labarugi');
         Route::get('/laporan/labarugi/pdf', [LaporanController::class, 'labaRugiPdf'])->name('laporan.labarugi.pdf');
+        Route::get('/laporan/labarugi/excel', [LaporanController::class, 'labaRugiExcel'])->name('laporan.labarugi.excel');
+
         Route::get('/laporan/labarugi-proyek', [LaporanController::class, 'labaRugiProyek'])->name('laporan.labarugi_proyek');
+        Route::get('/laporan/labarugi-proyek/pdf', [LaporanController::class, 'labaRugiProyekPdf'])->name('laporan.labarugi_proyek.pdf');
+        Route::get('/laporan/labarugi-proyek/excel', [LaporanController::class, 'labaRugiProyekExcel'])->name('laporan.labarugi_proyek.excel');
+
         Route::get('/laporan/labarugi-konsolidasi', [LaporanController::class, 'labaRugiKonsolidasi'])->name('laporan.labarugi_konsolidasi');
+        Route::get('/laporan/labarugi-konsolidasi/pdf', [LaporanController::class, 'labaRugiKonsolidasiPdf'])->name('laporan.labarugi_konsolidasi.pdf');
+        Route::get('/laporan/labarugi-konsolidasi/excel', [LaporanController::class, 'labaRugiKonsolidasiExcel'])->name('laporan.labarugi_konsolidasi.excel');
+
         Route::get('/laporan/aruskas-langsung', [LaporanController::class, 'arusKasLangsung'])->name('laporan.aruskas_langsung');
+        Route::get('/laporan/aruskas-langsung/pdf', [LaporanController::class, 'arusKasLangsungPdf'])->name('laporan.aruskas_langsung.pdf');
+        Route::get('/laporan/aruskas-langsung/excel', [LaporanController::class, 'arusKasLangsungExcel'])->name('laporan.aruskas_langsung.excel');
+
         Route::get('/laporan/aruskas-tidak-langsung', [LaporanController::class, 'arusKasTidakLangsung'])->name('laporan.aruskas_tidak_langsung');
+        Route::get('/laporan/aruskas-tidak-langsung/pdf', [LaporanController::class, 'arusKasTidakLangsungPdf'])->name('laporan.aruskas_tidak_langsung.pdf');
+        Route::get('/laporan/aruskas-tidak-langsung/excel', [LaporanController::class, 'arusKasTidakLangsungExcel'])->name('laporan.aruskas_tidak_langsung.excel');
+
         Route::get('/laporan/aruskas-proyek', [LaporanController::class, 'arusKasProyek'])->name('laporan.aruskas_proyek');
+        Route::get('/laporan/aruskas-proyek/pdf', [LaporanController::class, 'arusKasProyekPdf'])->name('laporan.aruskas_proyek.pdf');
+        Route::get('/laporan/aruskas-proyek/excel', [LaporanController::class, 'arusKasProyekExcel'])->name('laporan.aruskas_proyek.excel');
+
         Route::get('/laporan/aruskas-konsolidasi', [LaporanController::class, 'arusKasKonsolidasi'])->name('laporan.aruskas_konsolidasi');
+        Route::get('/laporan/aruskas-konsolidasi/pdf', [LaporanController::class, 'arusKasKonsolidasiPdf'])->name('laporan.aruskas_konsolidasi.pdf');
+        Route::get('/laporan/aruskas-konsolidasi/excel', [LaporanController::class, 'arusKasKonsolidasiExcel'])->name('laporan.aruskas_konsolidasi.excel');
+
         Route::get('/laporan/perubahan-ekuitas', [LaporanController::class, 'perubahanEkuitas'])->name('laporan.perubahan_ekuitas');
+        Route::get('/laporan/perubahan-ekuitas/pdf', [LaporanController::class, 'perubahanEkuitasPdf'])->name('laporan.perubahan_ekuitas.pdf');
+        Route::get('/laporan/perubahan-ekuitas/excel', [LaporanController::class, 'perubahanEkuitasExcel'])->name('laporan.perubahan_ekuitas.excel');
+
         Route::get('/laporan/persediaan', [LaporanController::class, 'persediaan'])->name('laporan.persediaan');
+        Route::get('/laporan/persediaan/pdf', [LaporanController::class, 'persediaanPdf'])->name('laporan.persediaan.pdf');
+        Route::get('/laporan/persediaan/excel', [LaporanController::class, 'persediaanExcel'])->name('laporan.persediaan.excel');
     });
 
     // =====================================================
@@ -150,12 +202,16 @@ Route::middleware('auth')->group(function () {
     // =====================================================
     // IMPORT & EXPORT DATA - Manajer, Admin, Superuser
     // =====================================================
+    Route::middleware('role:superuser,admin')->group(function () {
+        Route::post('import-export/import/{module}', [\App\Http\Controllers\ImportExportController::class, 'import'])->name('import-export.import');
+    });
+
     Route::middleware('role:superuser,admin,manajer')->group(function () {
         Route::get('import-export', [\App\Http\Controllers\ImportExportController::class, 'index'])->name('import-export.index');
         Route::get('import-export/export/{module}', [\App\Http\Controllers\ImportExportController::class, 'export'])->name('import-export.export');
         Route::get('import-export/template/{module}', [\App\Http\Controllers\ImportExportController::class, 'template'])->name('import-export.template');
-        Route::post('import-export/import/{module}', [\App\Http\Controllers\ImportExportController::class, 'import'])->name('import-export.import');
         Route::get('import-export/export-all', [\App\Http\Controllers\ImportExportController::class, 'exportAll'])->name('import-export.export-all');
+
 
         // Import Kas Routes
         Route::get('import-kas', [\App\Http\Controllers\ImportKasController::class, 'index'])->name('import-kas.index');

@@ -85,9 +85,12 @@ class JurnalKas extends Model
         });
 
         static::deleting(function ($jurnalKas) {
-            // Hapus jurnal umum yang terkait
+            // Hapus jurnal umum yang terkait secara aman menggunakan instance model agar memicu event deleting
             if ($jurnalKas->id_jurnal) {
-                Jurnal::where('id_jurnal', $jurnalKas->id_jurnal)->delete();
+                $jurnal = Jurnal::find($jurnalKas->id_jurnal);
+                if ($jurnal) {
+                    $jurnal->delete();
+                }
             }
         });
     }
@@ -141,8 +144,9 @@ class JurnalKas extends Model
             ]);
         }
 
-        // Update id_jurnal di jurnal_kas
-        $this->update(['id_jurnal' => $jurnal->id_jurnal]);
+        // Update id_jurnal di jurnal_kas without triggering events
+        $this->id_jurnal = $jurnal->id_jurnal;
+        $this->saveQuietly();
     }
 
     /**

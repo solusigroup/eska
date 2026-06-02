@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 
 class PenerimaanController extends Controller
 {
+    use \App\Traits\CheckLockedPeriod;
+
     public function index()
     {
         $penerimaan = Jurnal::where('sumber_jurnal', 'Penerimaan Kas')
@@ -43,6 +45,8 @@ class PenerimaanController extends Controller
 
     public function store(Request $request)
     {
+        $this->checkLockedPeriod($request->tanggal);
+
         $request->validate([
             'no_transaksi' => 'required|unique:jurnal_umum,no_transaksi',
             'tanggal' => 'required|date',

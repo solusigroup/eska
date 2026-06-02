@@ -31,8 +31,16 @@
                         <label for="end_date" class="form-label">Sampai Tanggal</label>
                         <input type="date" class="form-control" id="end_date" name="end_date" value="{{ $endDate }}">
                     </div>
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-primary">Tampilkan</button>
+                    <div class="col-md-3 d-flex gap-2 align-items-end">
+                        <button type="submit" class="btn btn-primary flex-grow-1">Tampilkan</button>
+                        @if($idProyek)
+                            <a href="{{ route('laporan.aruskas_proyek.pdf', request()->all()) }}" class="btn btn-danger" target="_blank" title="Cetak PDF">
+                                <span data-feather="file-text"></span>
+                            </a>
+                            <a href="{{ route('laporan.aruskas_proyek.excel', request()->all()) }}" class="btn btn-success" title="Ekspor Excel">
+                                <span data-feather="file"></span>
+                            </a>
+                        @endif
                     </div>
                 </div>
             </form>

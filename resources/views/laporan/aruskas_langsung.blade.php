@@ -19,9 +19,15 @@
                     <label for="end_date" class="form-label">Sampai Tanggal</label>
                     <input type="date" class="form-control" id="end_date" name="end_date" value="{{ $endDate }}">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 d-flex gap-2">
                     <button type="submit" class="btn btn-primary">Tampilkan</button>
                     <a href="{{ route('laporan.aruskas_langsung') }}" class="btn btn-secondary">Reset</a>
+                    <a href="{{ route('laporan.aruskas_langsung.pdf', request()->all()) }}" class="btn btn-danger" target="_blank" title="Cetak PDF">
+                        <span data-feather="file-text"></span> PDF
+                    </a>
+                    <a href="{{ route('laporan.aruskas_langsung.excel', request()->all()) }}" class="btn btn-success" title="Ekspor Excel">
+                        <span data-feather="file"></span> Excel
+                    </a>
                 </div>
             </form>
         </div>

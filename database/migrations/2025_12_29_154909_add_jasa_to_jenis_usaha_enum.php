@@ -10,6 +10,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // Modify the enum to include 'jasa' option
         DB::statement("ALTER TABLE perusahaan MODIFY COLUMN jenis_usaha ENUM('dagang', 'simpan_pinjam', 'serba_usaha', 'jasa') DEFAULT 'dagang'");
     }
@@ -19,6 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // Remove 'jasa' from enum (revert to original)
         DB::statement("ALTER TABLE perusahaan MODIFY COLUMN jenis_usaha ENUM('dagang', 'simpan_pinjam', 'serba_usaha') DEFAULT 'dagang'");
     }

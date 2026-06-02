@@ -148,6 +148,16 @@ class DatabaseController extends Controller
 
         $seeder = $request->input('seeder', 'DatabaseSeeder');
 
+        // Scan files in database/seeders dynamically to avoid hardcoding allowed seeders list
+        $seederFiles = glob(database_path('seeders/*.php'));
+        $allowedSeeders = array_map(function ($file) {
+            return basename($file, '.php');
+        }, $seederFiles);
+
+        if (!in_array($seeder, $allowedSeeders)) {
+            return back()->with('error', 'Seeder tidak diizinkan atau tidak valid.');
+        }
+
         try {
             if ($seeder === 'DatabaseSeeder') {
                 Artisan::call('db:seed', ['--force' => true]);

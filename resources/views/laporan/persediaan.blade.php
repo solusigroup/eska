@@ -5,10 +5,13 @@
 @section('content')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Laporan Persediaan</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.print()">
-                <i class="bi bi-printer"></i> Cetak
-            </button>
+        <div class="btn-toolbar mb-2 mb-md-0 gap-2">
+            <a href="{{ route('laporan.persediaan.pdf') }}" class="btn btn-sm btn-outline-danger" target="_blank">
+                <span data-feather="file-text"></span> Cetak PDF
+            </a>
+            <a href="{{ route('laporan.persediaan.excel') }}" class="btn btn-sm btn-outline-success">
+                <span data-feather="file"></span> Ekspor Excel
+            </a>
         </div>
     </div>
 

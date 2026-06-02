@@ -408,7 +408,7 @@
             <!-- Master Data -->
             @if(auth()->user()->canViewMasterData())
                 @php
-                    $isMasterActive = request()->routeIs('pelanggan.*') || request()->routeIs('pemasok.*') || request()->routeIs('persediaan.*') || request()->routeIs('akun.*');
+                    $isMasterActive = request()->routeIs('pelanggan.*') || request()->routeIs('pemasok.*') || request()->routeIs('persediaan.*') || request()->routeIs('akun.*') || request()->routeIs('aset-tetap.*');
                 @endphp
                 <div class="sidebar-section">
                     <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#masterDataMenu"
@@ -446,6 +446,15 @@
                                     Akun (COA)
                                 </a>
                             </li>
+                            @if(auth()->user()->role === 'superuser' || auth()->user()->role === 'admin' || auth()->user()->role === 'manajer')
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('aset-tetap.*') ? 'active' : '' }}"
+                                    href="{{ route('aset-tetap.index') }}">
+                                    <span data-feather="database"></span>
+                                    Aset Tetap
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -572,7 +581,7 @@
             <!-- Laporan -->
             @if(auth()->user()->canViewReports())
                 @php
-                    $isLaporanActive = request()->routeIs('bukubesar.*') || request()->routeIs('laporan.*');
+                    $isLaporanActive = request()->routeIs('bukubesar.*') || request()->routeIs('laporan.*') || request()->routeIs('diagnosa.*');
                 @endphp
                 <div class="sidebar-section">
                     <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#laporanMenu"
@@ -652,6 +661,22 @@
                                     Perubahan Ekuitas
                                 </a>
                             </li>
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('laporan.persediaan') ? 'active' : '' }}"
+                                    href="{{ route('laporan.persediaan') }}">
+                                    <span data-feather="box"></span>
+                                    Persediaan
+                                </a>
+                            </li>
+                            @if(auth()->user()->role === 'superuser' || auth()->user()->role === 'admin' || auth()->user()->role === 'manajer')
+                            <li class="sidebar-nav-item">
+                                <a class="sidebar-nav-link {{ request()->routeIs('diagnosa.index') ? 'active' : '' }}"
+                                    href="{{ route('diagnosa.index') }}">
+                                    <span data-feather="shield"></span>
+                                    Diagnosa Neraca
+                                </a>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -680,7 +705,7 @@
             <!-- Admin -->
             @if(auth()->user()->canManageUsers())
                 @php
-                    $isAdminActive = request()->routeIs('perusahaan.*') || request()->routeIs('users.*') || request()->routeIs('database.*');
+                    $isAdminActive = request()->routeIs('perusahaan.*') || request()->routeIs('users.*') || request()->routeIs('database.*') || request()->routeIs('tutup-buku.*');
                 @endphp
                 <div class="sidebar-section">
                     <div class="sidebar-section-header" data-bs-toggle="collapse" data-bs-target="#adminMenu"
@@ -706,6 +731,15 @@
                                     Manajemen User
                                 </a>
                             </li>
+                            @if(auth()->user()->role === 'superuser' || auth()->user()->role === 'admin')
+                                <li class="sidebar-nav-item">
+                                    <a class="sidebar-nav-link {{ request()->routeIs('tutup-buku.*') ? 'active' : '' }}"
+                                        href="{{ route('tutup-buku.index') }}">
+                                        <span data-feather="lock"></span>
+                                        Tutup Buku
+                                    </a>
+                                </li>
+                            @endif
                             @if(auth()->user()->canAccessDatabase())
                                 <li class="sidebar-nav-item">
                                     <a class="sidebar-nav-link {{ request()->routeIs('database.*') ? 'active' : '' }}"

@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Log;
 
 class PembelianController extends Controller
 {
+    use \App\Traits\CheckLockedPeriod;
+
     public function index()
     {
         $pembelian = Pembelian::with('pemasok')->orderBy('tanggal_faktur', 'desc')->get();
@@ -38,6 +40,8 @@ class PembelianController extends Controller
 
     public function store(Request $request)
     {
+        $this->checkLockedPeriod($request->tanggal_faktur);
+
         $request->validate([
             'id_pemasok' => 'required|exists:pemasok,id_pemasok',
             'no_faktur' => 'required|unique:pembelian,no_faktur_pembelian',

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 class JurnalController extends Controller
 {
     use \App\Traits\CheckSaldoTrait;
+    use \App\Traits\CheckLockedPeriod;
 
     public function index()
     {
@@ -35,6 +36,8 @@ class JurnalController extends Controller
 
     public function store(Request $request)
     {
+        $this->checkLockedPeriod($request->tanggal);
+
         $request->validate([
             'no_transaksi' => 'required|unique:jurnal_umum,no_transaksi',
             'tanggal' => 'required|date',

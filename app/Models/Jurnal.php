@@ -13,6 +13,15 @@ class Jurnal extends Model
     protected $primaryKey = 'id_jurnal';
     protected $guarded = ['id_jurnal'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($jurnal) {
+            $jurnal->details()->delete();
+        });
+    }
+
     protected $casts = [
         'tanggal' => 'date',
     ];

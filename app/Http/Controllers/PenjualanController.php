@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Log;
 
 class PenjualanController extends Controller
 {
+    use \App\Traits\CheckLockedPeriod;
+
     public function index()
     {
         $penjualan = Penjualan::with('pelanggan')->orderBy('tanggal_faktur', 'desc')->get();
@@ -37,6 +39,8 @@ class PenjualanController extends Controller
 
     public function store(Request $request)
     {
+        $this->checkLockedPeriod($request->tanggal_faktur);
+
         $request->validate([
             'id_pelanggan' => 'required|exists:pelanggan,id_pelanggan',
             'no_faktur' => 'required|unique:penjualan,no_faktur',
