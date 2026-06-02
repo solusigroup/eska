@@ -103,4 +103,107 @@ class JurnalController extends Controller
         $jurnal->load('details.akun');
         return view('jurnal.show', compact('jurnal'));
     }
+
+    public function edit($id)
+    {
+        $jurnal = Jurnal::with('details')->findOrFail($id);
+
+        // Check locked period
+        $this->checkLockedPeriod($jurnal->tanggal);
+
+        // Prevent editing automatic/locked journals
+        if ($jurnal->is_locked) {
+            return redirect()->route('jurnal.index')->with('error', 'Jurnal ini dikunci dan tidak dapat diedit.');
+        }
+
+        $akun = Akun::orderBy('kode_akun')->get();
+        return view('jurnal.edit', compact('jurnal', 'akun'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $jurnal = Jurnal::findOrFail($id);
+
+        $this->checkLockedPeriod($jurnal->tanggal);
+        $this->checkLockedPeriod($request->tanggal);
+
+        if ($jurnal->is_locked) {
+            return redirect()->route('jurnal.index')->with('error', 'Jurnal ini dikunci dan tidak dapat diedit.');
+        }
+
+        $request->validate([
+            'no_transaksi' => 'required|unique:jurnal_umum,no_transaksi,' . $id . ',id_jurnal',
+            'tanggal' => 'required|date',
+            'deskripsi' => 'required|string',
+            'details' => 'required|array|min:2',
+            'details.*.kode_akun' => 'required|exists:akun,kode_akun',
+            'details.*.debit' => 'required|numeric|min:0',
+            'details.*.kredit' => 'required|numeric|min:0',
+        ]);
+
+        $totalDebit = collect($request->details)->sum('debit');
+        $totalKredit = collect($request->details)->sum('kredit');
+
+        if ($totalDebit != $totalKredit) {
+            return back()->with('error', 'Jurnal tidak seimbang (Balance). Total Debit: ' . $totalDebit . ', Total Kredit: ' . $totalKredit)->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+            // Cek saldo cukup
+            foreach ($request->details as $detail) {
+                if ($detail['kredit'] > 0) {
+                    if (!$this->checkSaldoCukup($detail['kode_akun'], $detail['kredit'])) {
+                        $akun = Akun::where('kode_akun', $detail['kode_akun'])->first();
+                        $saldo = $this->getSaldoSaatIni($detail['kode_akun']);
+                        throw new \Exception("Saldo akun " . $akun->nama_akun . " tidak mencukupi! Saldo saat ini: Rp " . number_format($saldo, 2, ',', '.'));
+                    }
+                }
+            }
+
+            $jurnal->update([
+                'no_transaksi' => $request->no_transaksi,
+                'tanggal' => $request->tanggal,
+                'deskripsi' => $request->deskripsi,
+            ]);
+
+            // Hapus detail lama
+            JurnalDetail::where('id_jurnal', $id)->delete();
+
+            // Simpan detail baru
+            foreach ($request->details as $detail) {
+                if ($detail['debit'] > 0 || $detail['kredit'] > 0) {
+                    JurnalDetail::create([
+                        'id_jurnal' => $jurnal->id_jurnal,
+                        'kode_akun' => $detail['kode_akun'],
+                        'debit' => $detail['debit'],
+                        'kredit' => $detail['kredit'],
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('jurnal.index')->with('success', 'Jurnal umum berhasil diperbarui.');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Gagal memperbarui jurnal: ' . $e->getMessage())->withInput();
+        }
+    }
+
+    public function destroy($id)
+    {
+        $jurnal = Jurnal::findOrFail($id);
+
+        $this->checkLockedPeriod($jurnal->tanggal);
+
+        if ($jurnal->is_locked) {
+            return redirect()->route('jurnal.index')->with('error', 'Jurnal ini dikunci dan tidak dapat dihapus.');
+        }
+
+        $jurnal->delete();
+
+        return redirect()->route('jurnal.index')->with('success', 'Jurnal umum berhasil dihapus.');
+    }
 }
