@@ -128,17 +128,17 @@
                 <td>
                     <select class="form-select form-select-sm" name="details[${rowCount}][kode_akun]" required>
                         <option value="">-- Pilih Akun --</option>
-                        \${akunData.map(a => `<option value="\${a.kode_akun}" \${a.kode_akun == selectedKode ? 'selected' : ''}>\${a.kode_akun} - \${a.nama_akun}</option>`).join('')}
+                        ${akunData.map(a => `<option value="${a.kode_akun}" ${a.kode_akun == selectedKode ? 'selected' : ''}>${a.kode_akun} - ${a.nama_akun}</option>`).join('')}
                     </select>
                 </td>
                 <td>
-                    <input type="number" class="form-control form-control-sm input-debit" name="details[${rowCount}][debit]" value="\${valDebit}" min="0" onkeyup="hitungTotal()" onchange="hitungTotal()">
+                    <input type="number" class="form-control form-control-sm input-debit" name="details[${rowCount}][debit]" value="${valDebit}" min="0" onkeyup="hitungTotal()" onchange="hitungTotal()">
                 </td>
                 <td>
-                    <input type="number" class="form-control form-control-sm input-kredit" name="details[${rowCount}][kredit]" value="\${valKredit}" min="0" onkeyup="hitungTotal()" onchange="hitungTotal()">
+                    <input type="number" class="form-control form-control-sm input-kredit" name="details[${rowCount}][kredit]" value="${valKredit}" min="0" onkeyup="hitungTotal()" onchange="hitungTotal()">
                 </td>
                 <td>
-                    <button type="button" class="btn btn-danger btn-icon btn-sm" onclick="hapusBaris(\${rowCount})">
+                    <button type="button" class="btn btn-danger btn-icon btn-sm" onclick="hapusBaris(${rowCount})">
                         <span data-feather="x" style="width: 14px; height: 14px;"></span>
                     </button>
                 </td>
